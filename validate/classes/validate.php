@@ -64,7 +64,7 @@
  * </code>
  *
  * 
- * @link https://github.com/dracony/PHPixie-swift-mailer Download this module from Github
+ * @link https://github.com/dracony/PHPixie-validate Download this module from Github
  * @package    Validate
  */
 class Validate {
