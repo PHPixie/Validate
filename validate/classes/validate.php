@@ -9,7 +9,7 @@
  * To enable it add 'validate' to modules array in /application/config/core.php.
  *
  * This module allows you to validate input data against a set of rules.
- * <code >
+ * <code>
  *	 Validate::factory($this->request->post())
  *	 
  *		//Username must be filled
@@ -30,7 +30,7 @@
  * You can apply the NOT logic to a rule by using '!' e.g. '!filled'.
  * Calling the errors() method will return a list of rules each field did not meet.
  * You can specify a different identifier for an unmatched rule like this:
- * <code >
+ * <code>
  *  //if username is left empty the errors array will contain 
  *  //'was_left_empty' identifier for this field
  *	$v->rule('username', array('filled',null,'was_left_empty');
@@ -39,7 +39,7 @@
  * If you specify more than one rule set per field it will be considered valid
  * if ANY of those match. This allows for some complex logic when combined with
  * conditional rules.
- * <code >
+ * <code>
  *  //'height' value must be between 3 and 8 
  *	//If the 'type' value is 'fairy'
  *  $v->rule('height', array(
