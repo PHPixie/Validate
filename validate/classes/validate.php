@@ -42,14 +42,24 @@
  * <code >
  *  //'height' value must be between 3 and 8 
  *	//If the 'type' value is 'fairy'
- *  $v->rule('height', array('between', array(3,8)), array(
- *		array('type', array('equals', 'fairy')
+ *  $v->rule('height', array(
+ * 			array('between', array(3, 8))
+ *  	),array(
+ *			array('type', array(
+ *				array('equals', 'fairy')
+ *			))
+ *		)
  *	);
  *	
  *	//Or 'height' can be between 1 and 3
  *	//If the 'type' is 'pixie'
- *  $v->rule('height', array('between', array(1,3)), array(
- *		array('type', array('equals', 'pixie')
+ *  $v->rule('height', array(
+ * 			array('between', array(1, 3))
+ *  	),array(
+ *			array('type', array(
+ *				array('equals', 'pixie')
+ *			))
+ *		)
  *	);
  * </code>
  *
@@ -94,7 +104,7 @@ class Validate {
 	 * @param   array  $input  Associative array of fields and values
 	 * @return  Validate   Initialized Validate object
 	 */
-	protected function __construct($input){
+	protected function __construct($input=array()){
 		$this->input = $input;
 		$this->_rules = Config::get('validate.rules');
 	}
@@ -253,12 +263,24 @@ class Validate {
 	}
 	
 	/**
+	 * Sets new input array
+	 *
+	 * @param   array  $input  New input array
+	 * @return  Validate  Returns self
+	 */
+	public function input($input) {
+		$this->input = $input;
+		$this->_errors = null;
+		return $this;
+	}
+	
+	/**
 	 * Creates a Validate instance and intializes it with input data
 	 *
 	 * @param   array  $input  Associative array of fields and values
 	 * @return  Validate   Initialized Validate object
 	 */
-	public static function factory($input) {
+	public static function factory($input=array()) {
 		return new Validate($input);
 	}
 	
@@ -454,7 +476,7 @@ class Validate {
 	 * @return  bool 
 	 */
 	public function func($val,$func) {
-		return $func($val);
+		return call_user_func($func, $val);
 	}
 	
 }
