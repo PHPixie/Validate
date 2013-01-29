@@ -116,9 +116,9 @@ class Validate {
 	 * <code>
 	 *	 
 	 *	//A string identifying a single rule
-     *	->rule('username', 'filled') 		
+	 *	->rule('username', 'filled') 		
 	 *	//An array of rules
-     *	->rule('username', array(
+	 *	->rule('username', array(
 	 *		'filled',
 	 *		'email'
 	 *	)) 		
