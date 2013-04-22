@@ -1,5 +1,65 @@
 <?php
-namespace {
+namespace PHPixie\Validate {
+
+/**
+ * Reusable array validator. Allows you to validate input data against a set of rules.
+ * <code>
+ *	 $pixie->validate->get($this->request->post())
+ *	 
+ *		//Username must be filled
+ *		->rule('username', 'filled')
+ *		
+ *		//Password must be filled and have a minimum
+ *		//of 6 characters
+ *		->rule('password', array(
+ *			'filled',
+ *			array('min_length',6)
+ *		)
+ *	 ->valid();
+ * </code>
+ *
+ * All rules except 'filled' will be considered valid for empty values. You have to add
+ * the 'filled' rule to make a field required.
+ * 
+ * You can apply the NOT logic to a rule by using '!' e.g. '!filled'.
+ * Calling the errors() method will return a list of rules each field did not meet.
+ * You can specify a different identifier for an unmatched rule like this:
+ * <code>
+ *  //if username is left empty the errors array will contain 
+ *  //'was_left_empty' identifier for this field
+ *	$v->rule('username', array('filled',null,'was_left_empty');
+ * </code>
+ *
+ * If you specify more than one rule set per field it will be considered valid
+ * if ANY of those match. This allows for some complex logic when combined with
+ * conditional rules.
+ * <code>
+ *  //'height' value must be between 3 and 8 
+ *	//If the 'type' value is 'fairy'
+ *  $v->rule('height', array(
+ * 			array('between', array(3, 8))
+ *  	),array(
+ *			array('type', array(
+ *				array('equals', 'fairy')
+ *			))
+ *		)
+ *	);
+ *	
+ *	//Or 'height' can be between 1 and 3
+ *	//If the 'type' is 'pixie'
+ *  $v->rule('height', array(
+ * 			array('between', array(1, 3))
+ *  	),array(
+ *			array('type', array(
+ *				array('equals', 'pixie')
+ *			))
+ *		)
+ *	);
+ * </code>
+ *
+ * 
+ * @package    Validate
+ */
 	class Validator{
 		
 		/**
@@ -41,9 +101,8 @@ namespace {
 		 * Creates a Validate instance and intializes it with input data
 		 *
 		 * @param   array  $input  Associative array of fields and values
-		 * @return  Validate   Initialized Validate object
 		 */
-		protected function __construct($pixie, $input = array()) {
+		public function __construct($pixie, $input = array()) {
 			$this->pixie = $pixie;
 			$this->input = $input;
 		}
@@ -73,7 +132,7 @@ namespace {
 		 * @param   string  $field  Field to apply the rule group to
 		 * @param   mixed   $rules  Rules for this field
 		 * @param   array   $conditions An array of rules that must match for this rule set to be applied
-		 * @return  Validate   Returns self
+		 * @return  \PHPixie\Validate\Validator   Returns self
 		 */
 		public function rule($field,$rules,$conditions=array()){
 			$this->_groups[] = array($field, $rules,$conditions);
@@ -83,6 +142,7 @@ namespace {
 		/**
 		 * Validates the input data
 		 *
+		 * @return void
 		 */
 		protected function validate() {
 			if($this->_errors === null)
@@ -164,10 +224,10 @@ namespace {
 				if (!$this->pixie->validate->filled($value) && $func != 'filled')
 					continue;
 				
-				if (method_exists($this, "rule_{$func}") {
+				if (method_exists($this, "rule_{$func}")) {
 					$func = array($this, "rule_{$func}");
 				}else{
-					$func = array($this->pixie->orm, $func);
+					$func = array($this->pixie->validate, $func);
 				}
 				
 				$passed = call_user_func_array($func, $params);
@@ -187,7 +247,7 @@ namespace {
 		 */
 		public function valid() {
 			$this->validate();
-			return empty($this->errors);
+			return empty($this->_errors);
 		}
 		
 		/**
@@ -204,7 +264,7 @@ namespace {
 		 * Sets new input array
 		 *
 		 * @param   array  $input  New input array
-		 * @return  Validate  Returns self
+		 * @return  \PHPixie\Validate\Validator  Returns self
 		 */
 		public function input($input) {
 			$this->input = $input;
