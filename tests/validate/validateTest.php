@@ -77,6 +77,15 @@ class ValidateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PHPixie\Validate::slug
+     */
+    public function testSlug()
+    {
+        $this->assertEquals(true, $this->object->slug('d3-d3'));
+		$this->assertEquals(false,$this->object->slug('ddd -'));
+    }
+	
+    /**
      * @covers PHPixie\Validate::decimal
      * @todo   Implement testDecimal().
      */

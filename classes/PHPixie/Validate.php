@@ -90,6 +90,15 @@ class Validate {
 		return (bool) preg_match('/^[\pL\pN]++$/uD', $val);
 	}
 	
+	/**
+	 * Checks if the value is a valid url slug. 
+	 *
+	 * @param   string  $val  Value to check
+	 * @return  bool 
+	 */
+	public function slug($val) {
+		return (bool) preg_match('/^[\pL\pN\-]++$/uD', $val);
+	}
 	
 	/**
 	 * Checks if the value is a decimal number
