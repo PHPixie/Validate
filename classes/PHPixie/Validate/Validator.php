@@ -147,7 +147,7 @@ class Validator{
 	 *                                 definitions of this field were valid
 	 */
 	public function field($name, $only_if_valid = false) {
-		$field = $this->pixie->validate->field($this, $name, $only_if_valid);
+		$field = $this->pixie->validate->field($name, $only_if_valid);
 		$this->fields[] = $field;
 		return $field;
 	}
