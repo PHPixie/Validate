@@ -162,7 +162,7 @@ class Field {
 				return true;
 		
 		foreach($this->rules as $rule)
-			if (!$rule->validate($this->name, $validator)) {
+			if (!$rule->validate($validator, $this->name)) {
 				$error = $this->custom_error ? $this->custom_error : $rule->type;
 				$this->errors[] = $error;
 				if ($this->throw_on_error)
