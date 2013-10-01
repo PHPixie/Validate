@@ -91,7 +91,7 @@ class Validate {
 	 * @return  \PHPixie\Validate\Field Field instance
 	 */
 	public function field($name) {
-		return new \PHPixie\Validate\Field($this, $name);
+		return new \PHPixie\Validate\Field($this->pixie, $name);
 	}
 	
 	/**
