@@ -110,7 +110,7 @@ class Field {
 	 * @return   \PHPixie\Validate\Field Returns added condition
 	 */
 	public function condition($field) {
-		$condition = $this->pixie->validate->field($this->pixie, $field);
+		$condition = $this->pixie->validate->field($field);
 		$this->conditions[] = $condition;
 		return $condition;
 	}
