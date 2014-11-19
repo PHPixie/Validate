@@ -85,12 +85,12 @@ class RulesetTest extends PHPUnit_Framework_TestCase {
      */
     public function testRule_Decimal_neg()
     {
-        $this->assertEquals(true, $this->ruleset->rule_decimal(3));
-	$this->assertEquals(true, $this->ruleset->rule_decimal(3.5));
-	$this->assertEquals(false,$this->ruleset->rule_decimal('3a'));
-        $this->assertEquals(true, $this->ruleset->rule_decimal(-3));
-	$this->assertEquals(true, $this->ruleset->rule_decimal(-3.5));
-	$this->assertEquals(false,$this->ruleset->rule_decimal('-3a'));
+        $this->assertEquals(true, $this->ruleset->rule_decimal_neg(3));
+	$this->assertEquals(true, $this->ruleset->rule_decimal_neg(3.5));
+	$this->assertEquals(false,$this->ruleset->rule_decimal_neg('3a'));
+        $this->assertEquals(true, $this->ruleset->rule_decimal_neg(-3));
+	$this->assertEquals(true, $this->ruleset->rule_decimal_neg(-3.5));
+	$this->assertEquals(false,$this->ruleset->rule_decimal_neg('-3a'));
     }
 
     /**
