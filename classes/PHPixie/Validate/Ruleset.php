@@ -40,7 +40,7 @@ class Ruleset {
 	 * @return  bool 
 	 */
 	public function rule_filled($val) {
-		return !empty($val);
+		return !empty($val) || $val === 0 || $val === '0';
 	}
 	
 	/**
