@@ -4,36 +4,47 @@ namespace PHPixie\Validate;
 
 class Filters
 {
-    protected $registries = array();
-    protected $filterMap  = array();
+    protected $filterMap;
+    protected $negatedMap;
     
-    public function __construct($externalRegistries)
+    public function __construct()
     {
-        $this->registries[]= $this->buildStringRegistry();
-        foreach($externalRegistries as $registry) {
-            $this->registries[]= $registry;
-        }
         
-        foreach($this->registries as $registry) {
+    }
+    
+    public function filterMap()
+    {
+        foreach($this->repositories() as $repository) {
+            $repositoryName = $repository->name();
+            
             foreach($registry->filters() as $name) {
-                $this->filterMap[$name] = $registry;
+                $this->filterMap[$name] = array($repositoryName, false);
+                
+                $negated = 'not'.ucfirst($name);
+                $this->negatedMap[$negated] = $name;
             }
         }
     }
     
-    public function checkFilter($filter, $value)
+    public function callFilter($name, $value, $arguments = array())
     {
-        $name = $filter->name();
-        if(!array_key_exists($name, $this->filterMap)) {
-            throw new Exception("Filter '$name' does not exist");
-        }
-        
-        $registry = $this->filterMap[$name];
-        return $registry->check($name, $value, $filter->attributes());
+        list($repositoryName, $name) = $this->filterMap[$name];
+        $repository = $this->repositories[$repositoryName];
+        return $repository->callFilter($name, $value, $arguments);
     }
     
-    public function filter($name, $arguments = array())
+    public function filterByName($name, $arguments = array(), $negate = false)
     {
-        return new Filters\Filter($name, $arguments);
+        if(array_key_exists($name, $this->negatedMap)) {
+            $negate = !$negate;
+            $name   = $this->negatedMap[$name];
+        }
+        
+        return $this->filter($name, $arguments, $negate);
+    }
+    
+    public function filter($name, $arguments = array(), $negate = false)
+    {
+        return new Filters\Filter($name, $arguments, $negate);
     }
 }

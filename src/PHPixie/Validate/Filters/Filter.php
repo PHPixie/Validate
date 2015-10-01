@@ -4,12 +4,27 @@ namespace PHPixie\Validate\Filters;
 
 class Filter
 {
+    protected $filters;
     protected $name;
-    protected $parameters;
+    protected $arguments;
+    protected $negate = false;
     
-    public function __construct($name, $parameters)
+    public function __construct($filters, $name, $arguments = array(), $negate = false)
     {
-        $this->name       = $name;
-        $this->parameters = $parameters;
+        $this->filters   = $filters;
+        $this->name      = $name;
+        $this->arguments = $arguments;
+        $this->negate    = $negate;
+    }
+    
+    public function check($value)
+    {
+        $result = $this->filters->callFilter(
+            $this->name,
+            $value,
+            $this->arguments
+        );
+        
+        return ($result xor $this->negate);
     }
 }
