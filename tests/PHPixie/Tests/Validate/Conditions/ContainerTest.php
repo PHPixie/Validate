@@ -52,6 +52,49 @@ class ContainerTest extends \PHPixie\Test\Testcase
         $this->assertSame($condition, $this->container->addField('pixie'));
     }
     
+    /**
+     * @covers ::field
+     * @covers ::<protected>
+     */
+    public function testField()
+    {
+        $conditions = array();
+        
+        $condition = $this->prepareField('pixie');
+        $conditions[]= $condition;
+        
+        $self = $this;
+        $callable = function($parameter) use($self, $condition) {
+            $self->assertSame($condition, $parameter);
+        };
+        
+        $result = $this->container->field('pixie', $callable);
+        $this->assertSame($this->container, $result);
+        
+        $condition = $this->prepareField('trixie');
+        $conditions[]= $condition;
+        
+        $array = array('trixie');
+        $this->method($condition, 'filters', null, array($array), 0);
+        
+        $result = $this->container->field('trixie', $array);
+        $this->assertSame($this->container, $result);
+        
+        foreach(array(false, true) as $withParams) {
+            $condition = $this->prepareField('blum');
+            $conditions[]= $condition;
+            
+            $params = $withParams ? array(5, 4) : array();
+            $this->method($condition, 'filter', null, array('rule', $params), 0);
+            
+            $arguments = array_merge(array('blum', 'rule'), $params);
+            $result = call_user_func_array(array($this->container, 'field'), $arguments);
+            $this->assertSame($this->container, $result);
+        }
+        
+        $this->assertSame($conditions, $this->container->conditions());
+    }
+    
     protected function prepareField($field)
     {
         $condition = $this->quickMock('\PHPixie\Validate\Conditions\Condition\Field');

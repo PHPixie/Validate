@@ -6,13 +6,18 @@ class Filter
 {
     protected $filters;
     protected $name;
-    protected $arguments;
+    protected $parameters;
     
-    public function __construct($filters, $name, $arguments = array())
+    public function __construct($filters, $name, $parameters = array())
     {
         $this->filters   = $filters;
         $this->name      = $name;
-        $this->arguments = $arguments;
+        $this->parameters = $parameters;
+    }
+    
+    public function name()
+    {
+        return $this->name;
     }
     
     public function check($value)
@@ -20,7 +25,7 @@ class Filter
         return $this->filters->callFilter(
             $this->name,
             $value,
-            $this->arguments
+            $this->parameters
         );
     }
 }

@@ -8,8 +8,8 @@ namespace PHPixie\Tests\Validate\Filters;
 class FilterTest extends \PHPixie\Test\Testcase
 {
     protected $filters;
-    protected $name      = 'pixie';
-    protected $arguments = array('trixie');
+    protected $name       = 'pixie';
+    protected $parameters = array('trixie');
     
     public function setUp()
     {
@@ -18,7 +18,7 @@ class FilterTest extends \PHPixie\Test\Testcase
         $this->filter = new \PHPixie\Validate\Filters\Filter(
             $this->filters,
             $this->name,
-            $this->arguments
+            $this->parameters
         );
     }
     
@@ -38,7 +38,8 @@ class FilterTest extends \PHPixie\Test\Testcase
     public function testCheck()
     {
         foreach(array(true, false) as $result) {
-            $this->method($this->filters, 'callFilter', $result, array($this->name, 5, $this->arguments), 0);
+            $with = array($this->name, 5, $this->parameters);
+            $this->method($this->filters, 'callFilter', $result, $with, 0);
             $this->assertSame($result, $this->filter->check(5));
         }
     }

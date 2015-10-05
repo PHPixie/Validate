@@ -98,16 +98,16 @@ class FiltersTest extends \PHPixie\Test\Testcase
     {
         $filter = $this->filters->filter('pixie', array(5));
         $this->assertInstance($filter, '\PHPixie\Validate\Filters\Filter', array(
-            'filters'   => $this->filters,
-            'name'      => 'pixie',
-            'arguments' => array(5)
+            'filters'    => $this->filters,
+            'name'       => 'pixie',
+            'parameters' => array(5)
         ));
         
         $filter = $this->filters->filter('pixie');
         $this->assertInstance($filter, '\PHPixie\Validate\Filters\Filter', array(
-            'filters'   => $this->filters,
-            'name'      => 'pixie',
-            'arguments' => array()
+            'filters'    => $this->filters,
+            'name'       => 'pixie',
+            'parameters' => array()
         ));
     }
     

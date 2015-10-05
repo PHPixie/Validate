@@ -16,31 +16,56 @@ class Field implements \PHPixie\Validate\Conditions\Condition
     
     public function check($sliceData)
     {
-        $value = $sliceData->get();
+        return $this->checkFilters($sliceData) === null;
+    }
+    
+    protected function checkFilters($sliceData)
+    {
+        $value = $sliceData->get($this->field);
         foreach($this->filters as $filter) {
-            if(!$filter->validate($value)) {
-                return $this->errors()->field();
+            if(!$filter->check($value)) {
+                return $filter->name();
             }
         }
     }
     
-    public function addFilters()
+    public function filters($filters)
     {
-    
-    }
-    
-    public function addFilter()
-    {
-    
-    }
-    
-    
-    
-    public function filter($name, $parameters = array(), $negate = true)
-    {
-        $filter = $this->filterBuilder->filter($name, $arguments, $negate);
-        $this->filters[]= $filter;
+        foreach($filters as $key => $value) {
+            if(is_numeric($key)) {
+                $name       = $value;
+                $parameters = array();
+            
+            }else{
+                $name       = $key;
+                $parameters = $value;
+            }
+            
+            $this->addFilter($name, $parameters);
+        }
+        
         return $this;
+    }
+    
+    public function filter($name, $parameters = array())
+    {
+        $this->addFilter($name, $parameters);
+        return $this;
+    }
+    
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+    
+    protected function addFilter($name, $parameters)
+    {
+        $filter = $this->filterBuilder->filter(
+            $name,
+            $parameters
+        );
+        
+        $this->filters[]= $filter;
     }
     
     public function __call($method, $arguments)

@@ -30,12 +30,12 @@ class Container
         if(is_callable($parameter)) {
             $parameter($condition);
         
-        }elseif(!is_array($parameter)) {
-            $condition->addFilters($parameter);
+        }elseif(is_array($parameter)) {
+            $condition->filters($parameter);
         
         }else{
-            $arguments = array_slice($arguments, 2, func_get_args());
-            $condition->addFilter($parameter, $arguments);
+            $arguments = array_slice(func_get_args(), 2);
+            $condition->filter($parameter, $arguments);
         }
         
         return $this->addCondition($condition);
