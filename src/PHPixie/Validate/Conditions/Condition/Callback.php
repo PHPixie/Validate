@@ -11,7 +11,7 @@ class Callback implements \PHPixie\Validate\Conditions\Condition
         $this->callback = $callback;
     }
     
-    public function validate($sliceData)
+    public function check($sliceData)
     {
         $callback = $this->callback;
         return $callback($sliceData);

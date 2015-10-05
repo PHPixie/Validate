@@ -22,6 +22,4 @@ abstract class Rule
     {
         return $this->condition;
     }
-    
-    
 }

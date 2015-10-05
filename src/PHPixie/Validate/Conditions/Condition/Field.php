@@ -14,7 +14,7 @@ class Field implements \PHPixie\Validate\Conditions\Condition
         $this->field         = $field;
     }
     
-    public function validate($sliceData)
+    public function check($sliceData)
     {
         $value = $sliceData->get();
         foreach($this->filters as $filter) {
@@ -23,6 +23,18 @@ class Field implements \PHPixie\Validate\Conditions\Condition
             }
         }
     }
+    
+    public function addFilters()
+    {
+    
+    }
+    
+    public function addFilter()
+    {
+    
+    }
+    
+    
     
     public function filter($name, $parameters = array(), $negate = true)
     {
@@ -36,3 +48,4 @@ class Field implements \PHPixie\Validate\Conditions\Condition
         return $this->filter($method, $arguments);
     }
 }
+

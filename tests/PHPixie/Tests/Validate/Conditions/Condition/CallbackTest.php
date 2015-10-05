@@ -41,7 +41,7 @@ class CallbackTest extends \PHPixie\Test\Testcase
             $value = $isValid ? 5 : 6;
             $this->method($sliceData, 'get', $value, array(), 0);
             
-            $result = $this->condition->validate($sliceData);
+            $result = $this->condition->check($sliceData);
             $this->assertSame($isValid, $result);
         }
     }

@@ -4,47 +4,97 @@ namespace PHPixie\Validate;
 
 class Filters
 {
+    protected $externalRegistries;
+    protected $registries;
     protected $filterMap;
-    protected $negatedMap;
     
-    public function __construct()
+    public function __construct($externalRegistries = array())
     {
-        
+        $this->externalRegistries = $externalRegistries;
+    }
+    
+    public function registries()
+    {
+        $this->requireRegistries();        
+        return $this->registries;
     }
     
     public function filterMap()
     {
-        foreach($this->repositories() as $repository) {
-            $repositoryName = $repository->name();
-            
+        $this->requireFilterMap();
+        return $this->filterMap;
+    }
+    
+    protected function requireRegistries()
+    {
+        if($this->registries !== null) {
+            return;
+        }
+        
+        $this->registries = array_merge(
+            $this->buildRegistries(),
+            $this->externalRegistries
+        );
+    }
+    
+    protected function requireFilterMap()
+    {
+        if($this->filterMap !== null) {
+            return;
+        }
+        
+        $this->requireRegistries();
+        
+        $filterMap = array();
+        
+        foreach($this->registries as $registryKey => $registry) {
             foreach($registry->filters() as $name) {
-                $this->filterMap[$name] = array($repositoryName, false);
-                
-                $negated = 'not'.ucfirst($name);
-                $this->negatedMap[$negated] = $name;
+                $filterMap[$name] = $registryKey;
             }
         }
+        
+        $this->filterMap = $filterMap;
+    }
+    
+    protected function buildRegistries()
+    {
+        return array(
+            $this->buildCompareRegistry(),
+            $this->buildPatternRegistry(),
+            $this->buildStringRegistry()
+        );
     }
     
     public function callFilter($name, $value, $arguments = array())
     {
-        list($repositoryName, $name) = $this->filterMap[$name];
-        $repository = $this->repositories[$repositoryName];
-        return $repository->callFilter($name, $value, $arguments);
-    }
-    
-    public function filterByName($name, $arguments = array(), $negate = false)
-    {
-        if(array_key_exists($name, $this->negatedMap)) {
-            $negate = !$negate;
-            $name   = $this->negatedMap[$name];
+        $this->requireFilterMap();
+        
+        if(!array_key_exists($name, $this->filterMap)) {
+            throw new \PHPixie\Validate\Exception("Filter '$name' does not exist");
         }
         
-        return $this->filter($name, $arguments, $negate);
+        $registryKey = $this->filterMap[$name];
+        $registry = $this->registries[$registryKey];
+        return $registry->callFilter($name, $value, $arguments);
     }
     
-    public function filter($name, $arguments = array(), $negate = false)
+    public function filter($name, $arguments = array())
     {
-        return new Filters\Filter($name, $arguments, $negate);
+        return new Filters\Filter($this, $name, $arguments);
+    }
+    
+    protected function buildCompareRegistry()
+    {
+        return new Filters\Registry\Type\Compare();
+    }
+    
+    protected function buildPatternRegistry()
+    {
+        return new Filters\Registry\Type\Pattern();
+    }
+    
+    protected function buildStringRegistry()
+    {
+        return new Filters\Registry\Type\String();
     }
 }

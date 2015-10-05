@@ -5,7 +5,6 @@
         "This file is @generated automatically"
     ],
     "hash": "f1bb2171071f013dca9f5b268f18a78b",
-    "content-hash": "f80c7cc4df34199a854b58b903fc63f9",
     "packages": [
         {
             "name": "phpixie/slice",
