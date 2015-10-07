@@ -4,22 +4,23 @@ namespace PHPixie\Validate\Rules;
 
 abstract class Rule
 {
-    protected $conditions   = array();
-    
     protected $throwOnError = false;
     protected $errorMessage = null;
     
-    public function requiredConditions()
+    public function throwOnError($throwOnError)
     {
-        if($this->requiredConditions === null) {
-            $this->requiredConditions = $this->conditionBuilder->container();
-        }
-        
-        return $this->requiredConditions;
+        $this->throwOnError = $throwOnError;
+        return $this;
     }
     
-    public function condition()
+    public function errorMessage($errorMessage)
     {
-        return $this->condition;
+        $this->errorMessage = $errorMessage;
+        return $this;
+    }
+    
+    public function validate($configData, $result)
+    {
+        
     }
 }

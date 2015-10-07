@@ -30,6 +30,33 @@ class Container
         return $this->addRule($rule);
     }
     
+    public function conditional($conditionCallback = null, $ruleCallback = null)
+    {
+        $rule = $this->ruleBuilder->conditional();
+        
+        if($conditionalCallback !== null) {
+            $conditionalCallback($rule->conditionContainer());
+        }
+        
+        if($ruleCallback !== null) {
+            $ruleCallback($rule->ruleContainer());
+        }
+    }
+    
+    public function addConditional()
+    {
+        $condition = $this->conditionBuilder->conditional(  );
+        $this->addRule($rule);
+        return $rule;
+    }
+    
+    public function addField($name)
+    {
+        $condition = $this->conditionBuilder->field($name);
+        $this->addRule($rule);
+        return $rule;
+    }
+    
     public function addField($name)
     {
         $condition = $this->conditionBuilder->field($name);
