@@ -43,6 +43,29 @@ class ContainerTest extends \PHPixie\Test\Testcase
     }
     
     /**
+     * @covers ::isValid
+     * @covers ::<protected>
+     */
+    public function testIsValid()
+    {
+        $conditions = array();
+        
+        foreach(array(false, true) as $withField) {
+            $condition = $this->quickMock('\PHPixie\Validate\Conditions\Condition\Callback');
+            $conditions[]= $condition;
+            
+            $field = $withField ? 'pixie' : null;
+            $this->method($this->conditions, 'isValid', $condition, array($field), 0);
+            
+            $params = $withField ? array('pixie') : array();
+            $result = call_user_func_array(array($this->container, 'isValid'), $params);
+            $this->assertSame($this->container, $result);
+        }
+        
+        $this->assertSame($conditions, $this->container->conditions());
+    }
+    
+    /**
      * @covers ::addField
      * @covers ::<protected>
      */

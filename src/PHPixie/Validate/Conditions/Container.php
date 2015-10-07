@@ -54,6 +54,17 @@ class Container
         return $this->addCondition($condition);
     }
     
+    public function isValid($field = null)
+    {
+        $condition = $this->conditionBuilder->isValid($field);
+        return $this->addCondition($condition);
+    }
+    
+    public function isNotValid($field = null)
+    {
+        return $this->addIsValid($field, true);
+    }
+    
     public function addCondition($condition)
     {
         $this->conditions[]= $condition;

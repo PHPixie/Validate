@@ -31,10 +31,10 @@ class CallbackTest extends \PHPixie\Test\Testcase
     }
     
     /**
-     * @covers ::validate
+     * @covers ::check
      * @covers ::<protected>
      */
-    public function testValidate()
+    public function testCheck()
     {
         foreach(array(true, false) as $isValid) {
             $sliceData = $this->quickMock('\PHPixie\Slice\Data');

@@ -24,6 +24,11 @@ class Conditions
         return new Conditions\Condition\Callback($callback);
     }
     
+    public function isValid($field = null)
+    {
+        return new Conditions\Condition\IsValid($field);
+    }
+    
     public function container()
     {
         return new Conditions\Container($this);

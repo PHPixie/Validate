@@ -62,6 +62,25 @@ class ConditionsTest extends \PHPixie\Test\Testcase
     }
     
     /**
+     * @covers ::isValid
+     * @covers ::<protected>
+     */
+    public function testIsValid()
+    {
+        $class = '\PHPixie\Validate\Conditions\Condition\IsValid';
+        
+        $condition = $this->conditions->isValid('pixie');
+        $this->assertInstance($condition, $class, array(
+            'field' => 'pixie'
+        ));
+        
+        $condition = $this->conditions->isValid();
+        $this->assertInstance($condition, $class, array(
+            'field' => null
+        ));
+    }
+    
+    /**
      * @covers ::container
      * @covers ::<protected>
      */

@@ -1,0 +1,22 @@
+Filter:
+    Pros - dont call filters if empty
+    Pros - filters would lie
+    
+    Cons
+        Lie that filters are added
+        Calling them is not possible
+
+Filters:
+    Pros
+        Filter remains agnostic
+    Cons
+        Calling empty filters results in false positive
+        No way to override
+
+Registry
+    Pros
+        overridable
+        most flexibility
+    Cons
+        has to be copied everywhere
+        Calling empty filters results in false positive
