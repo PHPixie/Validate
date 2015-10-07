@@ -16,17 +16,52 @@ class Field implements \PHPixie\Validate\Conditions\Condition
     
     public function check($sliceData)
     {
-        return $this->checkFilters($sliceData) === null;
+        
+        return $this->checkData($sliceData) === null;
     }
     
-    protected function checkFilters($sliceData)
+    public function checkData($sliceData)
     {
         $value = $sliceData->get($this->field);
-        foreach($this->filters as $filter) {
-            if(!$filter->check($value)) {
-                return $filter->name();
+        $isEmpty = $value === null || $value === '';
+        
+        if($this->assertFilled && $isEmpty) {
+            return 'filled';
+        }
+        
+        if($this->assertEmpty && !$isEmpty) {
+            return 'empty';
+        }
+        
+        if(!$isEmpty) {
+            foreach($this->filters as $filter) {
+                if(!$filter->check($value)) {
+                    return $filter->name();
+                }
             }
         }
+    }
+    
+    public function filled()
+    {
+        $this->assertFilled = true;
+        return $this;
+    }
+    
+    public function _empty()
+    {
+        $this->assertEmpty = true;
+        return $this;
+    }
+    
+    public function getAssertFilled()
+    {
+        return $this->assertFilled;
+    }
+    
+    public function getAssertEmpty()
+    {
+        return $this->assertEmpty;
     }
     
     public function filters($filters)
@@ -70,6 +105,10 @@ class Field implements \PHPixie\Validate\Conditions\Condition
     
     public function __call($method, $arguments)
     {
+        if($method === 'empty') {
+            return $this->_empty();
+        }
+        
         return $this->filter($method, $arguments);
     }
 }

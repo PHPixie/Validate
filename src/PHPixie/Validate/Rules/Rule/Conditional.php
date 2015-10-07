@@ -4,17 +4,24 @@ namespace PHPixie\Validate\Rules\Rule;
 
 class Conditional implements \PHPixie\Validate\Rules\Rule
 {
-    protected $conditions;
+    protected $conditionContainer;
     
-    public function __construct($conditions)
+    public function __construct($conditionContainer)
     {
-        $this->conditions = $conditions;
+        $this->conditionContainer = $conditionContainer;
     }
     
     public function conditions()
     {
-        return $this->conditions;
+        return $this->conditionContainer;
     }
     
-    
+    public function validate($sliceData)
+    {
+        if(!$this->conditionContainer->check($sliceData)) {
+            return;
+        }
+        
+        return $this->ruleContainer->validate()
+    }
 }
