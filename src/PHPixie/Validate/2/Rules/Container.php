@@ -30,6 +30,43 @@ class Container
         return $this->addRule($rule);
     }
     
+    public function subarray($field, $parameter)
+    {
+        $valueCondition = $this->conditions->value();
+        
+        if(is_callable($parameter)) {
+            $parameter($rule);
+        
+        }elseif(is_array($parameter)) {
+            $rule->filters($parameter);
+        
+        }else{
+            $arguments = array_slice(func_get_args(), 2);
+            $rule->filter($parameter, $arguments);
+        }
+    }
+    
+    public function subdocument($field, $parameter)
+    {
+        $valueCondition = $this->conditions->value();
+        
+        if(is_callable($parameter)) {
+            $parameter($rule);
+        
+        }elseif(is_array($parameter)) {
+            $rule->filters($parameter);
+        
+        }else{
+            $arguments = array_slice(func_get_args(), 2);
+            $rule->filter($parameter, $arguments);
+        }
+    }
+    
+    protected function blaField($name, $parameter)
+    {
+        $value = $this-
+    }
+    
     public function conditional($conditionCallback = null, $ruleCallback = null)
     {
         $rule = $this->ruleBuilder->conditional();
@@ -45,14 +82,7 @@ class Container
     
     public function addConditional()
     {
-        $condition = $this->conditionBuilder->conditional(  );
-        $this->addRule($rule);
-        return $rule;
-    }
-    
-    public function addField($name)
-    {
-        $condition = $this->conditionBuilder->field($name);
+        $condition = $this->conditionBuilder->conditional();
         $this->addRule($rule);
         return $rule;
     }
@@ -76,14 +106,19 @@ class Container
         return $this->addCondition($condition);
     }
     
-    public function addCondition($condition)
+    public function addRule($condition)
     {
-        $this->conditions[]= $condition;
+        $this->rules[]= $condition;
         return $this;
     }
     
-    public function conditions()
+    public function rules()
     {
-        return $this->conditions;
+        return $this->rules;
+    }
+    
+    public function validate()
+    {
+    
     }
 }

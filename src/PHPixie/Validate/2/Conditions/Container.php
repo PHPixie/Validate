@@ -41,6 +41,24 @@ class Container
         return $this->addCondition($condition);
     }
     
+    public function subarray($field, $parameter)
+    {
+        $valueCondition = $this->conditionBuilder->value();
+        
+        if(is_callable($parameter)) {
+            $parameter($valueCondition);
+        
+        }elseif(is_array($parameter)) {
+            $valueCondition->filters($parameter);
+        
+        }else{
+            $arguments = array_slice(func_get_args(), 2);
+            $valueCondition->filter($parameter, $arguments);
+        }
+        
+        $condition = $this->subarrayCondition($field, $valueCondition);
+    }
+    
     public function addField($name)
     {
         $condition = $this->conditionBuilder->field($name);
