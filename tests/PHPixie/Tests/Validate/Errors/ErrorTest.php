@@ -5,9 +5,11 @@ namespace PHPixie\Tests\Validate\Errors;
 /**
  * @coversDefaultClass \PHPixie\Validate\Errors\Error
  */ 
-class ErrorTest extends \PHPixie\Test\Testcase
+abstract class ErrorTest extends \PHPixie\Test\Testcase
 {
-    protected $message = 'trixie';
+    protected $error;
+    
+    protected $type;
     
     public function setUp()
     {
@@ -16,25 +18,34 @@ class ErrorTest extends \PHPixie\Test\Testcase
     
     
     /**
-     * @covers ::__construct
+     * @covers ::type
      * @covers ::<protected>
      */
-    public function testConstruct()
+    public function testType()
     {
-    
+        $this->assertSame($this->type, $this->error->type());
     }
     
     /**
-     * @covers ::message
+     * @covers ::asString
      * @covers ::<protected>
      */
-    public function testMessage()
+    public function testAsString()
     {
-        $this->assertSame($this->message, $this->error->message());
+        $string = $this->prepareAsString();
+        $this->assertSame($string, $this->error->asString());
     }
     
-    protected function error()
+    /**
+     * @covers ::toString
+     * @covers ::<protected>
+     */
+    public function testToString()
     {
-        return new \PHPixie\Validate\Errors\Error($this->message);
+        $string = $this->prepareAsString();
+        $this->assertSame($string, (string) $this->error);
     }
+    
+    abstract protected function prepareAsString();
+    abstract protected function error();
 }
