@@ -21,7 +21,7 @@ class FilterTest extends \PHPixie\Tests\Validate\Errors\ErrorTest
     
     protected function prepareAsString()
     {
-        return "{$this->type}-{$this->filter}";
+        return $this->filter;
     }
         
     protected function error()

@@ -1,14 +1,16 @@
 <?php
 
-namespace PHPixie\Validate;
+namespace PHPixie\Validate\Values;
 
 class Result
 {
-    protected $builder;
+    protected $values;
+    protected $errors;
     
-    public function __construct($builder)
+    public function __construct($values, $errors)
     {
-        $this->builder = $builder;
+        $this->values = $values;
+        $this->errors = $errors;
     }
     
     public function errors()
@@ -18,7 +20,7 @@ class Result
     
     public function fieldResults()
     {
-        return $this->fieldResults;f
+        return $this->fieldResults;
     }
     
     public function invalidFieldResults()
@@ -27,7 +29,7 @@ class Result
         
         foreach($this->fieldResults() as $field => $result) {
             if(!$result->isValid()) {
-                $invalidFields[$field] => $result;
+                $invalidFields[$field] = $result;
             }
         }
         

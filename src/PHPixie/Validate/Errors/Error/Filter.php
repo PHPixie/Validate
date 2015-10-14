@@ -23,6 +23,6 @@ class Filter extends \PHPixie\Validate\Errors\Error
     
     public function asString()
     {
-        return "filter-{$this->filter}";
+        return $this->filter;
     }
 }

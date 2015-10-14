@@ -2,11 +2,11 @@
 
 namespace PHPixie\Validate\Errors\Error;
 
-class Required extends \PHPixie\Validate\Errors\Error
+class EmptyValue extends \PHPixie\Validate\Errors\Error
 {
     public function type()
     {
-        return 'required';
+        return 'empty';
     }
     
     public function asString()

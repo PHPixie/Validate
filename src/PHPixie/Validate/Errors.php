@@ -9,9 +9,9 @@ class Errors
         return new Errors\Error\Implementation($type, $stringValue);
     }
     
-    public function required()
+    public function emptyValue()
     {
-        return new Errors\Error\Required();
+        return new Errors\Error\EmptyValue();
     }
     
     public function filter($name)
@@ -24,13 +24,13 @@ class Errors
         return new Errors\Error\Message($message);
     }
     
-    public function notArray()
+    public function arrayType()
     {
-        return new Errors\Error\DataType\NotArray();
+        return new Errors\Error\ValueType\ArrayType();
     }
     
-    public function notScalar()
+    public function scalarType()
     {
-        return new Errors\Error\DataType\NotScalar();
+        return new Errors\Error\ValueType\Scalar();
     }
 }
