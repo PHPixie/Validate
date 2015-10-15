@@ -4,11 +4,6 @@ namespace PHPixie\Validate;
 
 class Errors
 {
-    public function error($type, $stringValue = null)
-    {
-        return new Errors\Error\Implementation($type, $stringValue);
-    }
-    
     public function emptyValue()
     {
         return new Errors\Error\EmptyValue();
@@ -22,6 +17,11 @@ class Errors
     public function message($message)
     {
         return new Errors\Error\Message($message);
+    }
+    
+    public function custom($customType, $stringValue = null)
+    {
+        return new Errors\Error\Custom($customType, $stringValue);
     }
     
     public function arrayType()

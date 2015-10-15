@@ -15,27 +15,6 @@ class ErrorsTest extends \PHPixie\Test\Testcase
     }
     
     /**
-     * @covers ::error
-     * @covers ::<protected>
-     */
-    public function testError()
-    {
-        $class = '\PHPixie\Validate\Errors\Error\Implementation';
-        
-        $error = $this->errors->error('pixie', 'trixie');
-        $this->assertInstance($error, $class, array(
-            'type'        => 'pixie',
-            'stringValue' => 'trixie'
-        ));
-        
-        $error = $this->errors->error('pixie');
-        $this->assertInstance($error, $class, array(
-            'type'        => 'pixie',
-            'stringValue' => null
-        ));
-    }
-    
-    /**
      * @covers ::emptyValue
      * @covers ::<protected>
      */
@@ -68,6 +47,27 @@ class ErrorsTest extends \PHPixie\Test\Testcase
         $error = $this->errors->message('pixie');
         $this->assertInstance($error, '\PHPixie\Validate\Errors\Error\Message', array(
             'message' => 'pixie'
+        ));
+    }
+    
+    /**
+     * @covers ::custom
+     * @covers ::<protected>
+     */
+    public function testCustom()
+    {
+        $class = '\PHPixie\Validate\Errors\Error\Custom';
+        
+        $error = $this->errors->custom('pixie', 'trixie');
+        $this->assertInstance($error, $class, array(
+            'customType'  => 'pixie',
+            'stringValue' => 'trixie'
+        ));
+        
+        $error = $this->errors->custom('pixie');
+        $this->assertInstance($error, $class, array(
+            'customType'  => 'pixie',
+            'stringValue' => null
         ));
     }
     
