@@ -16,10 +16,7 @@ class ResultTest extends \PHPixie\Test\Testcase
         $this->values = $this->quickMock('\PHPixie\Validate\Values');
         $this->errors = $this->quickMock('\PHPixie\Validate\Errors');
         
-        $this->result = new \PHPixie\Validate\Values\Result(
-            $this->values,
-            $this->errors
-        );
+        $this->result = $this->result();
     }
     
     /**
@@ -80,7 +77,7 @@ class ResultTest extends \PHPixie\Test\Testcase
     
     /**
      * @covers ::field
-     * @covers ::setField
+     * @covers ::setFieldResult
      * @covers ::fieldResults
      * @covers ::<protected>
      */
@@ -127,8 +124,47 @@ class ResultTest extends \PHPixie\Test\Testcase
         $this->assertSame($expect, $this->result->invalidFieldResults());
     }
     
+    /**
+     * @covers ::isValid
+     * @covers ::<protected>
+     */
+    public function testIsValid()
+    {
+        $this->isValidTest(true);
+        $this->isValidTest(false, true);
+        $this->isValidTest(false, false);
+    }
+    
+    protected function isValidTest($withErrors = false, $withInvalidField = false)
+    {
+        $this->result = $this->result();
+        
+        if($withErrors) {
+            $error = $this->abstractMock('\PHPixie\Validate\Errors\Error');
+            $this->result->addError($error);
+        }else{
+            for($i=0; $i<2; $i++) {
+                $result = $this->resultMock();
+                $this->result->setFieldResult('pixie'.$i, $result);
+                $fieldValid = $i==0 || !$withInvalidField;
+                $this->method($result, 'isValid', $fieldValid, array(), 0);
+            }
+        }
+        
+        $isValid = !$withErrors && !$withInvalidField;
+        $this->assertSame($isValid, $this->result->isValid());
+    }
+    
     protected function resultMock()
     {
         return $this->quickMock('\PHPixie\Validate\Values\Result');
+    }
+    
+    protected function result()
+    {
+        return new \PHPixie\Validate\Values\Result(
+            $this->values,
+            $this->errors
+        );
     }
 }

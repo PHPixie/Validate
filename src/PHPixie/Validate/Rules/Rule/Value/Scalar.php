@@ -2,7 +2,7 @@
 
 namespace PHPixie\Validate\Rules\Rule;
 
-class Value implements \PHPixie\Validate\Rules\Rule
+class Scalar implements \PHPixie\Validate\Rules\Rule
 {
     protected $filterBuilder;
     protected $filters = array();
@@ -51,7 +51,7 @@ class Value implements \PHPixie\Validate\Rules\Rule
         return $this->filters;
     }
     
-    public function validateValue($array, $result)
+    public function validateValue($value, $result)
     {
         foreach($this->filters as $filter) {
             if(!$filter->check($value)) {

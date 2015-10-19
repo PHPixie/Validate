@@ -59,7 +59,7 @@ class Result
             return false;
         }
         
-        return count($this->invalidFields()) === 0;
+        return count($this->invalidFieldResults()) === 0;
     }
     
     public function addEmptyValueError()

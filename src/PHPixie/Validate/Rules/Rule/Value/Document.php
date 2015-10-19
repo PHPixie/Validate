@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPixie\Validate\Rules\Rule;
+namespace PHPixie\Validate\Rules\Rule\Value;
 
-class Document
+class Document extends \PHPixie\Validate\Rules\Rule\Value
 {
     protected $rules;
     protected $fieldRules = array();
