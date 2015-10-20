@@ -109,4 +109,6 @@ class Result
         $this->errors[]= $error;
         return $this;
     }
+    
+    public function addIvalidKeysError($extraKeys){}
 }

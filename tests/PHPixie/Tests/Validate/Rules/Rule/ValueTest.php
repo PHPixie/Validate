@@ -2,17 +2,10 @@
 
 namespace PHPixie\Tests\Validate\Rules\Rule;
 
-class Callback{
-    public function __invoke()
-    {
-        
-    }
-}
-
 /**
  * @coversDefaultClass \PHPixie\Validate\Rules\Rule\Value
  */ 
-class ValueTest extends \PHPixie\Test\Testcase
+class ValueTest extends \PHPixie\Tests\Validate\Rules\RuleTest
 {
     protected $rules;
     protected $value;
@@ -20,7 +13,7 @@ class ValueTest extends \PHPixie\Test\Testcase
     public function setUp()
     {
         $this->rules = $this->quickMock('\PHPixie\Validate\Rules');
-        $this->value = $this->value();
+        $this->rule = $this->rule();
     }
     
     /**
@@ -39,13 +32,13 @@ class ValueTest extends \PHPixie\Test\Testcase
      */
     public function testRequired()
     {
-        $this->assertSame(false, $this->value->isRequired());
+        $this->assertSame(false, $this->rule->isRequired());
         
-        $this->assertSame($this->value, $this->value->required());
-        $this->assertSame(true, $this->value->isRequired());
+        $this->assertSame($this->rule, $this->rule->required());
+        $this->assertSame(true, $this->rule->isRequired());
         
-        $this->assertSame($this->value, $this->value->required(false));
-        $this->assertSame(false, $this->value->isRequired());
+        $this->assertSame($this->rule, $this->rule->required(false));
+        $this->assertSame(false, $this->rule->isRequired());
     }
     
     /**
@@ -59,10 +52,10 @@ class ValueTest extends \PHPixie\Test\Testcase
         for($i=0; $i<2; $i++) {
             $rule = $this->getRule();
             $rules[]= $rule;
-            $this->assertSame($this->value, $this->value->addRule($rule));
+            $this->assertSame($this->rule, $this->rule->addRule($rule));
         }
         
-        $this->assertSame($rules, $this->value->rules());
+        $this->assertSame($rules, $this->rule->rules());
     }
     
     /**
@@ -88,7 +81,7 @@ class ValueTest extends \PHPixie\Test\Testcase
             $expect = $rule;
         }else{
             $method = 'arrayOf';
-            $expect = $this->value;
+            $expect = $this->rule;
         }
         
         $args = array();
@@ -122,7 +115,7 @@ class ValueTest extends \PHPixie\Test\Testcase
             $expect = $rule;
         }else{
             $method = 'document';
-            $expect = $this->value;
+            $expect = $this->rule;
         }
         
         $args = array();
@@ -156,7 +149,7 @@ class ValueTest extends \PHPixie\Test\Testcase
             $expect = $rule;
         }else{
             $method = 'filter';
-            $expect = $this->value;
+            $expect = $this->rule;
         }
         
         $args = array();
@@ -185,21 +178,10 @@ class ValueTest extends \PHPixie\Test\Testcase
         $rule = $this->quickMock('\PHPixie\Validate\Rules\Rule\Filter');
         $this->method($this->rules, 'filter', $rule, array(), 0);
         
-        $value = $this->value;
+        $value = $this->rule;
         $this->assertException(function() use($value) {
             $value->addFilter(new \stdClass());
         }, '\PHPixie\Validate\Exception');
-    }
-    
-    protected function assertRuleBuilder($method, $args, $rule, $isAdd)
-    {
-        $expect = $isAdd ? $rule : $this->value;
-        
-        $result = call_user_func_array(array($this->value, $method), $args);
-        $this->assertSame($expect, $result);
-        
-        $rules = $this->value->rules();
-        $this->assertSame($rule, end($rules));    
     }
     
     /**
@@ -215,17 +197,17 @@ class ValueTest extends \PHPixie\Test\Testcase
     
     protected function validateTest($isEmpty = false, $isRequired = false)
     {
-        $this->value = $this->value();
+        $this->rule = $this->rule();
         
         if($isRequired) {
-            $this->value->required();
+            $this->rule->required();
         }
         
         $rules = array();
         for($i=0; $i<2; $i++) {
             $rule = $this->getRule();
             $rules[]= $rule;
-            $this->value->addRule($rule);
+            $this->rule->addRule($rule);
         }
         
         $value  = $isEmpty ? '' : 5;
@@ -242,22 +224,10 @@ class ValueTest extends \PHPixie\Test\Testcase
             }
         }
         
-        $this->value->validate($value, $result);
+        $this->rule->validate($value, $result);
     }
     
-    protected function ruleCallback($rule)
-    {
-        $callback = $this->quickMock('\PHPixie\Tests\Validate\Rules\Rule\Callback');
-        $this->method($callback, '__invoke', null, array($rule), 0);
-        return $callback;
-    }
-    
-    protected function getRule()
-    {
-        return $this->quickMock('\PHPixie\Validate\Rules\Rule');   
-    }
-    
-    protected function value()
+    protected function rule()
     {
         return new \PHPixie\Validate\Rules\Rule\Value(
             $this->rules
