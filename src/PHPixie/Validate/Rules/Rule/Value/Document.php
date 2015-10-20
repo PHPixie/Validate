@@ -58,7 +58,7 @@ class Document extends \PHPixie\Validate\Rules\Rule\Value
         return $rule;
     }
     
-    public function validateValue()
+    public function validateValue($value, $result)
     {
         if(!is_array($array)) {
             $result->error($this->errors->notArray());

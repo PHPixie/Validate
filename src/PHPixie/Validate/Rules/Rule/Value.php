@@ -2,40 +2,123 @@
 
 namespace PHPixie\Validate\Rules\Rule;
 
-abstract class Value implements \PHPixie\Validate\Rules\Rule
+class Value implements \PHPixie\Validate\Rules\Rule
 {
-    protected $rulesBuilder;
-    protected $isRequired = false;
+    protected $ruleBuilder;
     
+    protected $isRequired = false;
+    protected $rules      = array();
+    
+    public function __construct($ruleBuilder)
+    {
+        $this->ruleBuilder = $ruleBuilder;
+    }
     
     public function required($isRequired = true)
     {
         $this->isRequired = $isRequired;
+        return $this;
     }
     
-    public function callback($callback)
+    public function isRequired()
     {
-        $rule = $this->ruleBuilder->callback($callback);
-        $this->addRule($rule);
+        return $this->isRequired;
     }
     
-    public function validate($value, $result)
+    public function arrayOf($callback = null)
+    {
+        $this->addArrayOf($callback);
+        return $this;
+    }
+    
+    public function addArrayOf($callback = null)
+    {
+        $rule = $this->ruleBuilder->arrayOf();
+        if($callback !== null) {
+            $callback($rule);
+        }
+        
+        $this->addRule($rule);
+        return $rule;
+    }
+    
+    public function document($callback = null)
+    {
+        $this->addDocument($callback);
+        return $this;
+    }
+    
+    public function addDocument($callback = null)
+    {
+        $rule = $this->ruleBuilder->document();
+        if($callback !== null) {
+            $callback($rule);
+        }
+        
+        $this->addRule($rule);
+        return $rule;
+    }
+    
+    public function filter($parameter = null)
+    {
+        $this->addFilter($parameter);
+        return $this;
+    }
+    
+    public function addFilter($parameter = null)
+    {
+        $rule = $this->ruleBuilder->filter();
+        $this->applyFilterParameter($rule, $parameter);
+        
+        $this->addRule($rule);
+        return $rule;
+    }
+    
+    protected function applyFilterParameter($filterRule, $parameter)
+    {
+        if($parameter === null) {
+            return;
+        }
+        
+        if(is_string($parameter)) {
+            $filterRule->filter($parameter);
+            
+        }elseif(is_callable($parameter)) {
+            $parameter($filterRule);
+            
+        }elseif(is_array($parameter)) {
+            $filterRule->filters($parameter);
+            
+        }else{
+            $type = gettype($parameter);
+            throw new \PHPixie\Validate\Exception("Invalid filter definition '$type'");
+        }
+    }
+    
+    public function addRule($rule)
+    {
+        $this->rules[] = $rule;
+        return $this;
+    }
+    
+    public function rules()
+    {
+        return $this->rules;    
+    }
+    
+    public function validate($value, $result = null)
     {
         $isEmpty = in_array($value, array(null, ''), true);
         
         if($isEmpty) {
-            if(!this->isRequired) {
-                $result->emptyError();
+            if($this->isRequired) {
+                $result->addEmptyValueError();
             }
             return;
         }
         
-        $this->validateValue($value, $result);
-        
-        foreach($this->rules as $rule) {
+        foreach($this->rules() as $rule) {
             $rule->validate($value, $result);
         }
     }
-    
-    protected function validateValue($value, $result);
 }
