@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPixie\Validate\Rules\Rule;
+namespace PHPixie\Validate\Rules\Rule\Structure;
 
-class ArrayOf
+class Document implements \PHPixie\Validate\Rules\Rule
 {
     protected $rules;
     
-    protected $keyValueRule;
+    protected $keyRule;
     protected $itemRule;
     
     public function __construct($rules)
@@ -14,52 +14,50 @@ class ArrayOf
         $this->rules = $rules;
     }
     
-    public function value($parameter)
+    public function key($callback = null)
     {
-        $this->valueItem($parameter);
+        $this->addKey($callback);
         return $this;
     }
     
-    public function document($parameter)
+    public function addKey($callback = null)
     {
-        $this->documentItem($parameter);
+        $rule = $this->rules->value();
+        if($callback !== null) {
+            $callback($rule);
+        }
+        
+        $this->setKeyRule($rule);
+        return $rule;
+    }
+    
+    public function item($callback = null)
+    {
+        $this->addItem($callback);
         return $this;
     }
     
-    public function arrayOf($parameter)
+    public function addItem($callback = null)
     {
-        $this->arrayOfItem($parameter);
+        $rule = $this->rules->value();
+        if($callback !== null) {
+            $callback($rule);
+        }
+        
+        $this->setItemRule($rule);
+        return $rule;
+    }
+    
+    public function setKeyRule($rule)
+    {
+        $this->keyRule = $rule;
         return $this;
     }
     
-    public function keyValue($parameter)
+    public function setItemRule($rule)
     {
-        $rule = $this->keyValueRule();
+        $this->itemRule = $rule;
         return $this;
-    }
-    
-    public function valueItem($parameter)
-    {
-        $rule = $this->rules->buildArrayOf($parameter);
-        return $this->setItemRule($rule);
-    }
-    
-    public function documentItem($parameter)
-    {
-        $rule = $this->rules->buildArrayOf($parameter);
-        return $this->setItemRule($rule);
-    }
-    
-    public function arrayOfItem($parameter)
-    {
-        $rule = $this->rules->buildArrayOf($parameter);
-        return $this->setItemRule($rule);
-    }
-    
-    public function keyValue()
-    {
-        $this->keyRule = $this->rules->buildValue($parameter);
-        return $this->keyRule;
     }
     
     public function keyRule()
@@ -69,34 +67,25 @@ class ArrayOf
     
     public function itemRule()
     {
-        return $this->itemRule();
+        return $this->itemRule;
     }
     
-    public function setItemRule($itemRule)
+    public function validate($value, $result)
     {
-        $this->itemRule = $itemRule;
-        return $this;
-    }
-    
-    public function validateValue($array, $result)
-    {
-        if(!is_array($array)) {
-            $result->error($this->errors->notArray());
-        }
-        
-        if($this->keyRule === null && $this->itemRule === null) {
+        if(!is_array($value)) {
+            $result->addArrayTypeError();
             return;
         }
         
-        foreach($keys as $key) {
+        foreach($value as $key => $item) {
             $itemResult = $result->field($key);
             
             if($this->keyRule !== null) {
-                $this->keyRule->validate($key, $itemResult);
+                $this->keyRule->validate($key, $fieldResult);
             }
             
-            if($this->valueRule !== null) {
-                $this->keyRule->validate($array[$key], $itemResult);
+            if($this->itemRule !== null) {
+                $this->itemRule->validate($item, $fieldResult);
             }
         }
     }
