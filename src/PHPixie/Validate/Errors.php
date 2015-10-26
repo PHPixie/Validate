@@ -24,6 +24,11 @@ class Errors
         return new Errors\Error\Custom($customType, $stringValue);
     }
     
+    public function arrayCount($count, $minCount = null, $maxCount = null)
+    {
+        return new Errors\Error\ArrayCount($count, $minCount, $maxCount);
+    }
+
     public function arrayType()
     {
         return new Errors\Error\ValueType\ArrayType();

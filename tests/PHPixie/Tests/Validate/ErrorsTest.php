@@ -70,7 +70,31 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             'stringValue' => null
         ));
     }
-
+    
+    
+    /**
+     * @covers ::arrayCount
+     * @covers ::<protected>
+     */
+    public function testArrayCount()
+    {
+        $class = '\PHPixie\Validate\Errors\Error\ArrayCount';
+        
+        $error = $this->errors->arrayCount(4, 3, 5);
+        $this->assertInstance($error, $class, array(
+            'count'    => 4,
+            'minCount' => 3,
+            'maxCount' => 5
+        ));
+        
+        $error = $this->errors->arrayCount(4, 3);
+        $this->assertInstance($error, $class, array(
+            'count'    => 4,
+            'minCount' => 3,
+            'maxCount' => null
+        ));
+    }
+    
     /**
      * @covers ::arrayType
      * @covers ::<protected>

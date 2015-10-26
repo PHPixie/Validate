@@ -13,9 +13,16 @@ class Validator
         $this->rule    = $rule;
     }
     
-    public function validate($value)
+    public function rule()
     {
-        $result = $this->builder->result();
+        return $this->rule;
+    }
+    
+    public function validate($value, $result = null)
+    {
+        if($result === null) {
+            $result = $this->builder->result();
+        }
         $this->rule->validate($value, $result);
         return $result;
     }

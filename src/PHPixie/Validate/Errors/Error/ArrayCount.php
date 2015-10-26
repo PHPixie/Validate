@@ -5,27 +5,28 @@ namespace PHPixie\Validate\Errors\Error;
 class ArrayCount extends \PHPixie\Validate\Errors\Error
 {
     protected $count;
-    protected $min;
-    protected $max;
+    protected $minCount;
+    protected $maxCount;
     
-    public function __construct($count, $min = null, $max = null)
+    public function __construct($count, $minCount = null, $maxCount = null)
     {
-        if($min === null && $max === null) {
+        if($minCount === null && $maxCount === null) {
             throw new \PHPixie\Validate\Exception("Neither minimum nor maximum count specified.");
         }
         
-        $this->min = $min;
-        $this->max = $max;
+        $this->count = $count;
+        $this->minCount   = $minCount;
+        $this->maxCount   = $maxCount;
     }
     
-    public function min()
+    public function minCount()
     {
-        return $this->min;
+        return $this->minCount;
     }
     
-    public function max()
+    public function maxCount()
     {
-        return $this->max;
+        return $this->maxCount;
     }
     
     public function count()
@@ -35,7 +36,7 @@ class ArrayCount extends \PHPixie\Validate\Errors\Error
     
     public function type()
     {
-        return 'count';
+        return 'arrayCount';
     }
     
     public function asString()

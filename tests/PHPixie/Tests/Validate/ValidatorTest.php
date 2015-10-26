@@ -31,15 +31,38 @@ class ValidatorTest extends \PHPixie\Test\Testcase
     }
     
     /**
+     * @covers ::rule
+     * @covers ::<protected>
+     */
+    public function tetsRule()
+    {
+        $this->assertSame($this->rule, $this->validator->rule());
+    }
+    
+    /**
      * @covers ::validate
      * @covers ::<protected>
      */
     public function testValidate()
     {
+        $this->validateTest(false);
+        $this->validateTest(true);
+    }
+    
+    protected function validateTest($withResult)
+    {
         $result = $this->quickMock('\PHPixie\Validate\Result');
-        $this->method($this->builder, 'result', $result, array(), 0);
+        
+        $args = array('pixie');
+        if($withResult) {
+            $args[]= $result;
+        }else{
+            $this->method($this->builder, 'result', $result, array(), 0);
+        }
         
         $this->method($this->rule, 'validate', null, array('pixie', $result), 0);
-        $this->assertSame($result, $this->validator->validate('pixie'));
+        
+        $return = call_user_func_array(array($this->validator, 'validate'), $args);
+        $this->assertSame($result, $return);
     }
 }
