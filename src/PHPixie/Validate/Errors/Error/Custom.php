@@ -4,7 +4,7 @@ namespace PHPixie\Validate\Errors\Error;
 
 class Custom extends \PHPixie\Validate\Errors\Error
 {
-    protected $customType;
+    protected $count;
     protected $stringValue;
     
     public function __construct($customType, $stringValue = null)

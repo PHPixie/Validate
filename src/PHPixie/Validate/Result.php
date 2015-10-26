@@ -18,7 +18,7 @@ class Result
     
     public function fieldResults()
     {
-        return $this->fieldResults;f
+        return $this->fieldResults;
     }
     
     public function invalidFieldResults()
@@ -27,7 +27,7 @@ class Result
         
         foreach($this->fieldResults() as $field => $result) {
             if(!$result->isValid()) {
-                $invalidFields[$field] => $result;
+                $invalidFields[$field] = $result;
             }
         }
         
@@ -72,4 +72,6 @@ class Result
     {
         
     }
+    
+    public function addArrayCountError($a,$b,$c){}
 }

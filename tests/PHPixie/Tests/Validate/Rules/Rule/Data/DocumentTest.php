@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPixie\Tests\Validate\Rules\Rule\Data;
+namespace PHPixie\Tests\Validate\Rules\Rule\Structure;
 
 /**
- * @coversDefaultClass \PHPixie\Validate\Rules\Rule\Data\Document
+ * @coversDefaultClass \PHPixie\Validate\Rules\Rule\Structure\Document
  */
 class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 {
@@ -43,7 +43,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 
     /**
      * @covers ::field
-     * @covers ::addField
+     * @covers ::fieldValue
      * @covers ::<protected>
      */
     public function testField()
@@ -56,10 +56,10 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 
     protected function fieldTest($isAdd, $withCallback)
     {
-        $rule = $this->prepareValue();
+        list($rule, $callback) = $this->prepareBuildValue($withCallback);
 
         if($isAdd) {
-            $method = 'addField';
+            $method = 'fieldValue';
             $expect = $rule;
         }else{
             $method = 'field';
@@ -68,15 +68,8 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 
         $args = array();
         if($withCallback) {
-            $args[]= $this->ruleCallback($rule);
+            $args[]= $callback;
         }
-
-        $this->assertRuleBuilder($method, $args, $rule, $isAdd);
-    }
-
-    protected function assertRuleBuilder($method, $args, $rule, $isAdd)
-    {
-        $expect = $isAdd ? $rule : $this->rule;
 
         array_unshift($args, 'pixie');
         $result = call_user_func_array(array($this->rule, $method), $args);
@@ -88,44 +81,25 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
     }
 
     /**
-     * @covers ::validate
+     * @covers ::validateData
      * @covers ::<protected>
      */
-    public function testValidate()
+    public function testValidateData()
     {
-        $this->validateTest(false);
-
-        $this->validateTest(true, false, false);
-        $this->validateTest(true, true, false);
-        $this->validateTest(true, false, true);
-        $this->validateTest(true, true, true);
+        $this->validateDataTest(false, false);
+        $this->validateDataTest(true, false);
+        $this->validateDataTest(false, true);
+        $this->validateDataTest(true, true);
     }
 
-    protected function validateTest($isArray, $allowExtraFields = false, $withExtraFields = false)
+    protected function validateDataTest($allowExtraFields = false, $withExtraFields = false)
     {
         $this->rule = $this->rule();
-        list($value, $result) = $this->prepareValidateTest(
-            $isArray,
-            $allowExtraFields,
-            $withExtraFields
-        );
-        $this->rule->validate($value, $result);
-    }
-
-    protected function prepareValidateTest($isArray, $allowExtraFields, $withExtraFields)
-    {
         $result = $this->getResultMock();
+        $values = array();
         $resultAt = 0;
 
-        if(!$isArray) {
-            $this->method($result, 'addArrayTypeError', null, array(), $resultAt++);
-            return array(5, $result);
-        }
-
-        $values = array();
-
         $this->rule->allowExtraFields($allowExtraFields);
-
         $extraKeys = array('stella', 'blum');
 
         if($withExtraFields) {
@@ -156,10 +130,10 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
             $this->method($rule, 'validate', null, array($value, $fieldResult), 0);
         }
 
-        return array($values, $result);
+        $this->rule->validate($values, $result);
     }
-
-    protected function document()
+    
+    protected function rule()
     {
         return new \PHPixie\Validate\Rules\Rule\Data\Document(
             $this->rules

@@ -111,4 +111,5 @@ class Result
     }
     
     public function addIvalidKeysError($extraKeys){}
+    public function addArrayCountError($a,$b,$c){}
 }

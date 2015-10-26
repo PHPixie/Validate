@@ -4,8 +4,32 @@ namespace PHPixie\Validate;
 
 class Rules
 {
-    public function arrayOf(){}
-    public function document(){}
-    public function filter(){}
-    public function value(){}
+    protected $builder;
+    
+    public function __construct($builder)
+    {
+        $this->builder = $builder;
+    }
+    
+    public function value()
+    {
+        return new Rules\Rule\Value($this);
+    }
+    
+    public function filter()
+    {
+        return new Rules\Rule\Filter(
+            $this->builder->filters()
+        );
+    }
+    
+    public function document()
+    {
+        return new Rules\Rule\Data\Document($this);
+    }
+    
+    public function arrayOf()
+    {
+        return new Rules\Rule\Data\ArrayOf($this);
+    }
 }

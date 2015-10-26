@@ -4,16 +4,16 @@ namespace PHPixie\Tests\Validate;
 
 /**
  * @coversDefaultClass \PHPixie\Validate\Errors
- */ 
+ */
 class ErrorsTest extends \PHPixie\Test\Testcase
 {
     protected $errors;
-    
+
     public function setUp()
     {
         $this->errors = new \PHPixie\Validate\Errors();
     }
-    
+
     /**
      * @covers ::emptyValue
      * @covers ::<protected>
@@ -25,7 +25,7 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             '\PHPixie\Validate\Errors\Error\EmptyValue'
         );
     }
-    
+
     /**
      * @covers ::filter
      * @covers ::<protected>
@@ -37,7 +37,7 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             'filter' => 'pixie'
         ));
     }
-    
+
     /**
      * @covers ::message
      * @covers ::<protected>
@@ -49,7 +49,7 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             'message' => 'pixie'
         ));
     }
-    
+
     /**
      * @covers ::custom
      * @covers ::<protected>
@@ -57,20 +57,20 @@ class ErrorsTest extends \PHPixie\Test\Testcase
     public function testCustom()
     {
         $class = '\PHPixie\Validate\Errors\Error\Custom';
-        
+
         $error = $this->errors->custom('pixie', 'trixie');
         $this->assertInstance($error, $class, array(
             'customType'  => 'pixie',
             'stringValue' => 'trixie'
         ));
-        
+
         $error = $this->errors->custom('pixie');
         $this->assertInstance($error, $class, array(
             'customType'  => 'pixie',
             'stringValue' => null
         ));
     }
-    
+
     /**
      * @covers ::arrayType
      * @covers ::<protected>
@@ -82,7 +82,7 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             '\PHPixie\Validate\Errors\Error\ValueType\ArrayType'
         );
     }
-    
+
     /**
      * @covers ::scalarType
      * @covers ::<protected>
