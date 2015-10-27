@@ -27,7 +27,7 @@ class Ruleset {
 					array($validator, $field)
 				);
 				
-		if (empty($val) && $val !== 0 && $val !== '0')
+		if (empty($value) && $value !== 0 && $value !== '0')
 			return $rule != 'filled';
 			
 		return call_user_func_array(array($this, 'rule_'.$rule), $params);
