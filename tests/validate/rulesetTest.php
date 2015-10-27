@@ -38,6 +38,18 @@ class RulesetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @covers PHPixie\Validate::numeric_neg
+     * @todo   Implement testNumeric_neg().
+     */
+    public function testRule_Numeric_neg()
+    {
+        $this->assertEquals(true, $this->ruleset->rule_numeric_neg(1111));
+	$this->assertEquals(false,$this->ruleset->rule_numeric_neg('a1'));
+        $this->assertEquals(true, $this->ruleset->rule_numeric_neg(-1111));
+	$this->assertEquals(false,$this->ruleset->rule_numeric_neg('-a1'));
+    }
+
+    /**
      * @covers PHPixie\Validate::alpha_numeric
      * @todo   Implement testAlpha_numeric().
      */
@@ -65,6 +77,20 @@ class RulesetTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $this->ruleset->rule_decimal(3));
 		$this->assertEquals(true, $this->ruleset->rule_decimal(3.5));
 		$this->assertEquals(false,$this->ruleset->rule_decimal('3a'));
+    }
+	
+    /**
+     * @covers PHPixie\Validate::decimal_neg
+     * @todo   Implement testDecimal_neg().
+     */
+    public function testRule_Decimal_neg()
+    {
+        $this->assertEquals(true, $this->ruleset->rule_decimal_neg(3));
+	$this->assertEquals(true, $this->ruleset->rule_decimal_neg(3.5));
+	$this->assertEquals(false,$this->ruleset->rule_decimal_neg('3a'));
+        $this->assertEquals(true, $this->ruleset->rule_decimal_neg(-3));
+	$this->assertEquals(true, $this->ruleset->rule_decimal_neg(-3.5));
+	$this->assertEquals(false,$this->ruleset->rule_decimal_neg('-3a'));
     }
 
     /**

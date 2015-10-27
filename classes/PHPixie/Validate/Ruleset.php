@@ -54,13 +54,23 @@ class Ruleset {
 	}
 
 	/**
-	 * Checks if the value consists of numbers only
+	 * Checks if the value consists of numbers only, allowing negative numbers
 	 *
 	 * @param   string  $val  Value to check
 	 * @return  bool 
 	 */
 	public function rule_numeric($val) {
 		return (bool)preg_match('#^[0-9]*$#',$val);
+	}
+	
+	/**
+	 * Checks if the value consists of numbers only
+	 *
+	 * @param   string  $val  Value to check
+	 * @return  bool 
+	 */
+	public function rule_numeric_neg($val) {
+		return (bool)preg_match('#^(-)?[0-9]*$#',$val);
 	}
 	
 	/**
@@ -93,6 +103,16 @@ class Ruleset {
 		return (bool) preg_match('/^[0-9]+(?:\.[0-9]+)?$/D', $val);
 	}
 	
+	/**
+	 * Checks if the value is a decimal number, allowing negative numbers
+	 *
+	 * @param   string  $val  Value to check
+	 * @return  bool 
+	 */
+	public function rule_decimal_neg($val) {
+		return (bool) preg_match('/^(-)?[0-9]+(?:\.[0-9]+)?$/D', $val);
+	}
+
 	
 	/**
 	 * Checks if the value is a phone number
