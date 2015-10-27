@@ -11,6 +11,6 @@ class EmptyValue extends \PHPixie\Validate\Errors\Error
     
     public function asString()
     {
-        return $this->type();
+        return "Value is empty";
     }
 }

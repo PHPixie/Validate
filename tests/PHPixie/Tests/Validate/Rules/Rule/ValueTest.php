@@ -4,7 +4,7 @@ namespace PHPixie\Tests\Validate\Rules\Rule;
 
 /**
  * @coversDefaultClass \PHPixie\Validate\Rules\Rule\Value
- */ 
+ */
 class ValueTest extends \PHPixie\Tests\Validate\Rules\RuleTest
 {
     protected $rules;
@@ -92,6 +92,17 @@ class ValueTest extends \PHPixie\Tests\Validate\Rules\RuleTest
         $this->assertRuleBuilder($method, $args, $rule, $isAdd);
     }
     
+    protected function assertRuleBuilder($method, $args, $rule, $isAdd)
+    {
+        $expect = $isAdd ? $rule : $this->rule;
+        
+        $result = call_user_func_array(array($this->rule, $method), $args);
+        $this->assertSame($expect, $result);
+        
+        $rules = $this->rule->rules();
+        $this->assertSame($rule, end($rules));
+    }
+
     /**
      * @covers ::document
      * @covers ::addDocument

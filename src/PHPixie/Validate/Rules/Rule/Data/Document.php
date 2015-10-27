@@ -20,17 +20,13 @@ class Document extends \PHPixie\Validate\Rules\Rule\Data
 
     public function field($field, $callback = null)
     {
-        $this->fieldValue($field, $callback);
+        $this->valueField($field, $callback);
         return $this;
     }
 
     public function valueField($field, $callback = null)
     {
-        $rule = $this->rules->value();
-        if($callback !== null) {
-            $callback($rule);
-        }
-
+        $rule = $this->buildValue($callback);
         $this->setFieldRule($field, $rule);
         return $rule;
     }
@@ -48,10 +44,14 @@ class Document extends \PHPixie\Validate\Rules\Rule\Data
 
     public function fieldRule($field)
     {
-
+        if(!array_key_exists($field, $this->fieldRules)) {
+            return null;
+        }
+        
+        return $this->fieldRules[$field];
     }
 
-    protected function validateData($value, $result)
+    protected function validateData($result, $value)
     {
         if(!$this->allowExtraFields) {
             $extraFields = array_diff(
@@ -60,7 +60,7 @@ class Document extends \PHPixie\Validate\Rules\Rule\Data
             );
 
             if(!empty($extraFields)) {
-                $result->addIvalidKeysError($extraFields);
+                $result->addInvalidFieldsError($extraFields);
             }
         }
 

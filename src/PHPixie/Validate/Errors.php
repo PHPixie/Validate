@@ -24,14 +24,9 @@ class Errors
         return new Errors\Error\Custom($customType, $stringValue);
     }
     
-    public function arrayType()
+    public function dataType()
     {
-        return new Errors\Error\ValueType\ArrayType();
-    }
-    
-    public function documentType()
-    {
-        return new Errors\Error\ValueType\DocumentType();
+        return new Errors\Error\ValueType\Data();
     }
     
     public function scalarType()
@@ -39,8 +34,13 @@ class Errors
         return new Errors\Error\ValueType\Scalar();
     }
     
-    public function arrayCount($count, $minCount, $maxCount = null)
+    public function invalidFields($fields)
     {
-        return new Errors\Error\ArrayCount($count, $minCount, $maxCount);
+        return new Errors\Error\Data\InvalidFields($fields);
+    }
+    
+    public function itemCount($count, $minCount, $maxCount = null)
+    {
+        return new Errors\Error\Data\ItemCount($count, $minCount, $maxCount);
     }
 }

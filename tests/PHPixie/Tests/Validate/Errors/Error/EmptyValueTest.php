@@ -4,14 +4,14 @@ namespace PHPixie\Tests\Validate\Errors\Error;
 
 /**
  * @coversDefaultClass \PHPixie\Validate\Errors\Error\EmptyValue
- */ 
+ */
 class EmptyValueTest extends \PHPixie\Tests\Validate\Errors\ErrorTest
 {
     protected $type = 'empty';
     
     protected function prepareAsString()
     {
-        return 'empty';
+        return "Value is empty";
     }
     
     protected function error()

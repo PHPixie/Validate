@@ -25,6 +25,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 
     /**
      * @covers ::setFieldRule
+     * @covers ::fieldRule
      * @covers ::fieldRules
      * @covers ::<protected>
      */
@@ -32,13 +33,17 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
     {
         $rules = array();
         for($i=0; $i<2; $i++) {
+            $field = 'pixie'.$i;
             $rule = $this->getRule();
-            $rules['pixie'.$i]= $rule;
-            $result = $this->rule->setFieldRule('pixie'.$i, $rule);
+            $rules[$field]= $rule;
+            $result = $this->rule->setFieldRule($field, $rule);
+            
             $this->assertSame($this->rule, $result);
+            $this->assertSame($rule, $this->rule->fieldRule($field));
         }
-
+        
         $this->assertSame($rules, $this->rule->fieldRules());
+        $this->assertSame(null, $this->rule->fieldRule('trixie'));
     }
 
     /**
@@ -59,7 +64,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
         list($rule, $callback) = $this->prepareBuildValue($withCallback);
 
         if($isAdd) {
-            $method = 'fieldValue';
+            $method = 'valueField';
             $expect = $rule;
         }else{
             $method = 'field';
@@ -97,7 +102,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
         $this->rule = $this->rule();
         $result = $this->getResultMock();
         $values = array();
-        $resultAt = 0;
+        $resultAt = 1;
 
         $this->rule->allowExtraFields($allowExtraFields);
         $extraKeys = array('stella', 'blum');
@@ -109,7 +114,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
         }
 
         if(!$allowExtraFields && $withExtraFields) {
-            $this->method($result, 'addIvalidKeysError', null, array($extraKeys), $resultAt++);
+            $this->method($result, 'addInvalidFieldsError', null, array($extraKeys), $resultAt++);
         }
 
         $rules  = array();
@@ -129,8 +134,9 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
 
             $this->method($rule, 'validate', null, array($value, $fieldResult), 0);
         }
-
-        $this->rule->validate($values, $result);
+        
+        $this->method($result, 'getValue', $values, array(), 0);
+        $this->rule->validate($result);
     }
     
     protected function rule()

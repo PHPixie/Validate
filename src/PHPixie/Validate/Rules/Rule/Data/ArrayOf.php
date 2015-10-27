@@ -80,14 +80,14 @@ class ArrayOf extends \PHPixie\Validate\Rules\Rule\Data
         return $this->itemRule;
     }
 
-    public function validateData($value, $result)
+    public function validateData($result, $value)
     {
         $count = count($value);
         $min = $this->minCount;
         $max = $this->maxCount;
         
         if($min !== null && $count < $min || $max !== null && $count > $max) {
-            $result->addArrayCountError($count, $min, $max);
+            $result->addItemCountError($count, $min, $max);
         }
         
         if($this->itemRule === null && $this->keyRule === null) {

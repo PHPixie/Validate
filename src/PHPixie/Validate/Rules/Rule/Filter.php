@@ -51,8 +51,10 @@ class Filter implements \PHPixie\Validate\Rules\Rule
         return $this->filters;
     }
 
-    public function validate($value, $result)
+    public function validate($result)
     {
+        $value = $result->getValue();
+        
         if(!is_scalar($value)) {
             $result->addScalarTypeError();
             return;

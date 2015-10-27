@@ -71,54 +71,18 @@ class ErrorsTest extends \PHPixie\Test\Testcase
         ));
     }
     
-    
     /**
-     * @covers ::arrayCount
+     * @covers ::dataType
      * @covers ::<protected>
      */
-    public function testArrayCount()
-    {
-        $class = '\PHPixie\Validate\Errors\Error\ArrayCount';
-        
-        $error = $this->errors->arrayCount(4, 3, 5);
-        $this->assertInstance($error, $class, array(
-            'count'    => 4,
-            'minCount' => 3,
-            'maxCount' => 5
-        ));
-        
-        $error = $this->errors->arrayCount(4, 3);
-        $this->assertInstance($error, $class, array(
-            'count'    => 4,
-            'minCount' => 3,
-            'maxCount' => null
-        ));
-    }
-    
-    /**
-     * @covers ::arrayType
-     * @covers ::<protected>
-     */
-    public function testArrayType()
+    public function testDataType()
     {
         $this->assertInstance(
-            $this->errors->arrayType(),
-            '\PHPixie\Validate\Errors\Error\ValueType\ArrayType'
+            $this->errors->dataType(),
+            '\PHPixie\Validate\Errors\Error\ValueType\Data'
         );
     }
     
-    /**
-     * @covers ::documentType
-     * @covers ::<protected>
-     */
-    public function testDocumentType()
-    {
-        $this->assertInstance(
-            $this->errors->documentType(),
-            '\PHPixie\Validate\Errors\Error\ValueType\Document'
-        );
-    }
-
     /**
      * @covers ::scalarType
      * @covers ::<protected>
@@ -129,5 +93,43 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             $this->errors->scalarType(),
             '\PHPixie\Validate\Errors\Error\ValueType\Scalar'
         );
+    }
+    
+    /**
+     * @covers ::itemCount
+     * @covers ::<protected>
+     */
+    public function testItemCount()
+    {
+        $class = '\PHPixie\Validate\Errors\Error\Data\ItemCount';
+        
+        $error = $this->errors->itemCount(4, 3, 5);
+        $this->assertInstance($error, $class, array(
+            'count'    => 4,
+            'minCount' => 3,
+            'maxCount' => 5
+        ));
+        
+        $error = $this->errors->itemCount(4, 3);
+        $this->assertInstance($error, $class, array(
+            'count'    => 4,
+            'minCount' => 3,
+            'maxCount' => null
+        ));
+    }
+    
+    /**
+     * @covers ::invalidFields
+     * @covers ::<protected>
+     */
+    public function testInvalidFields()
+    {
+        $fields = array('pixie');
+        $error = $this->errors->invalidFields($fields);
+        
+        $class = '\PHPixie\Validate\Errors\Error\Data\InvalidFields';
+        $this->assertInstance($error, $class, array(
+            'fields' => $fields
+        ));
     }
 }

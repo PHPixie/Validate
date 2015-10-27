@@ -16,19 +16,22 @@ class Builder
         return $this->instance('filters');
     }
     
+    public function results()
+    {
+        return $this->instance('results');
+    }
+    
     public function rules()
     {
         return $this->instance('rules');
     }
     
-    public function result()
-    {
-        return new Result($this);
-    }
-    
     public function validator($rule)
     {
-        return new Validator($this, $rule);
+        return new Validator(
+            $this->results(),
+            $rule
+        );
     }
     
     protected function instance($name)
@@ -49,6 +52,11 @@ class Builder
     protected function buildFilters()
     {
         return new Filters();
+    }
+    
+    protected function buildResults()
+    {
+        return new Results($this);
     }
     
     protected function buildRules()

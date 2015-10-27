@@ -5,7 +5,7 @@ namespace PHPixie\Tests\Validate\Rules\Rule;
 /**
  * @coversDefaultClass \PHPixie\Validate\Rules\Rule\Filter
  */
-class FilterTest extends \PHPixie\Test\Testcase
+class FilterTest extends \PHPixie\Tests\Validate\Rules\RuleTest
 {
     protected $filters;
     
@@ -100,10 +100,10 @@ class FilterTest extends \PHPixie\Test\Testcase
     
     protected function validateTest($filters, $isScalar, $isValid)
     {
-        $result = $this->quickMock('\PHPixie\Validate\Values\Result');
+        $result = $this->getResultMock();
         if(!$isScalar) {
             $value = array();
-            $this->method($result, 'addScalarTypeError',null, array(), 0);
+            $this->method($result, 'addScalarTypeError',null, array(), 1);
         }else{
             $value = 'trixie';
             foreach($filters as $key => $filter) {
@@ -115,12 +115,13 @@ class FilterTest extends \PHPixie\Test\Testcase
                 $this->method($filter, 'check', $filterValid, array($value), 0);
                 
                 if(!$filterValid) {
-                    $this->method($result, 'addFilterError', null, array($filter), 0);
+                    $this->method($result, 'addFilterError', null, array($filter), 1);
                 }
             }
         }
         
-        $this->rule->validate($value, $result);
+        $this->method($result, 'getValue', $value, array(), 0);
+        $this->rule->validate($result);
     }
     
     protected function prepareAddFilter($name, $parameters = array(), $at = 0)

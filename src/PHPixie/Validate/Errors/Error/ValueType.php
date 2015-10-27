@@ -9,10 +9,5 @@ abstract class ValueType extends \PHPixie\Validate\Errors\Error
         return 'valueType';
     }
     
-    public function asString()
-    {
-        return $this->valueType();
-    }
-    
     abstract public function valueType();
 }

@@ -11,9 +11,11 @@ class Callback implements \PHPixie\Validate\Rules\Rule
         $this->callback = $callback;
     }
     
-    public function validate($value, $result)
+    public function validate($result)
     {
+        $value = $result->getValue();
+        
         $callback = $this->callback;
-        $callback($value, $result);
+        $callback($result, $value);
     }
 }

@@ -32,8 +32,9 @@ abstract class DataTest extends \PHPixie\Tests\Validate\Rules\RuleTest
     public function testValidateNotArray()
     {
         $result = $this->getResultMock();
-        $this->method($result, 'addArrayTypeError', null, array(), 0);
-        $this->rule->validate(5, $result);
+        $this->method($result, 'getValue', 5, array(), 0);
+        $this->method($result, 'addDataTypeError', null, array(), 1);
+        $this->rule->validate($result);
     }
 
     protected function prepareBuildValue($withCallback = false, $rulesAt = 0)
@@ -53,11 +54,6 @@ abstract class DataTest extends \PHPixie\Tests\Validate\Rules\RuleTest
         $rule = $this->quickMock('\PHPixie\Validate\Rules\Rule\Value');
         $this->method($this->rules, 'value', $rule, array(), $rulesAt);
         return $rule;
-    }
-
-    protected function getResultMock()
-    {
-        return $this->quickMock('\PHPixie\Validate\Values\Result');
     }
 
     abstract protected function rule();

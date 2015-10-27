@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPixie\Validate\Errors\Error;
+namespace PHPixie\Validate\Errors\Error\Data;
 
-class ArrayCount extends \PHPixie\Validate\Errors\Error
+class ItemCount extends \PHPixie\Validate\Errors\Error
 {
     protected $count;
     protected $minCount;
@@ -36,12 +36,21 @@ class ArrayCount extends \PHPixie\Validate\Errors\Error
     
     public function type()
     {
-        return 'arrayCount';
+        return 'itemCount';
     }
     
     public function asString()
     {
-        return $this->type();
+        $prefix = "Item count {$this->count} is not ";
+        if($this->minCount !== null && $this->maxCount !== null) {
+            return $prefix."between {$this->minCount} and $this->maxCount";
+        }
+        
+        if($this->maxCount === null) {
+            return $prefix."greater or equal to {$this->minCount}";
+        }
+        
+        return $prefix."less or equal to {$this->maxCount}";
     }
     
 }

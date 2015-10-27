@@ -4,12 +4,12 @@ namespace PHPixie\Validate;
 
 class Validator
 {
-    protected $builder;
+    protected $results;
     protected $rule;
     
-    public function __construct($builder, $rule)
+    public function __construct($results, $rule)
     {
-        $this->builder = $builder;
+        $this->results = $results;
         $this->rule    = $rule;
     }
     
@@ -18,12 +18,10 @@ class Validator
         return $this->rule;
     }
     
-    public function validate($value, $result = null)
+    public function validate($value)
     {
-        if($result === null) {
-            $result = $this->builder->result();
-        }
-        $this->rule->validate($value, $result);
+        $result = $this->results->root($value);
+        $this->rule->validate($result);
         return $result;
     }
 }

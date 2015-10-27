@@ -88,7 +88,7 @@ abstract class Result
         );
     }
     
-    public function addDocumentTypeError()
+    public function addDataTypeError()
     {
         return $this->addError(
             $this->errorBuilder->documentType()
@@ -102,7 +102,14 @@ abstract class Result
         );
     }
     
-    public function addArrayCountError($count, $minCount, $maxCount = null)
+    public function addItemCountError($count, $minCount, $maxCount = null)
+    {
+        return $this->addError(
+            $this->errorBuilder->itemCount($count, $minCount, $maxCount)
+        );
+    }
+    
+    public function addInvalidFieldsError($fields)
     {
         return $this->addError(
             $this->errorBuilder->arrayCount($count, $minCount, $maxCount)

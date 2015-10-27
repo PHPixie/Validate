@@ -7,16 +7,16 @@ namespace PHPixie\Tests\Validate;
  */
 class ValidatorTest extends \PHPixie\Test\Testcase
 {
-    protected $builder;
+    protected $results;
     protected $rule;
     
     public function setUp()
     {
-        $this->builder = $this->quickMock('\PHPixie\Validate\Builder');
+        $this->results = $this->quickMock('\PHPixie\Validate\Results');
         $this->rule    = $this->quickMock('\PHPixie\Validate\Rules\Rule');
         
         $this->validator = new \PHPixie\Validate\Validator(
-            $this->builder,
+            $this->results,
             $this->rule
         );
     }
@@ -45,24 +45,11 @@ class ValidatorTest extends \PHPixie\Test\Testcase
      */
     public function testValidate()
     {
-        $this->validateTest(false);
-        $this->validateTest(true);
-    }
-    
-    protected function validateTest($withResult)
-    {
-        $result = $this->quickMock('\PHPixie\Validate\Result');
+        $result = $this->quickMock('\PHPixie\Validate\Results\Result\Root');
+        $this->method($this->results, 'root', $result, array(5), 0);
         
-        $args = array('pixie');
-        if($withResult) {
-            $args[]= $result;
-        }else{
-            $this->method($this->builder, 'result', $result, array(), 0);
-        }
+        $this->method($this->rule, 'validate', null, array($result), 0);
         
-        $this->method($this->rule, 'validate', null, array('pixie', $result), 0);
-        
-        $return = call_user_func_array(array($this->validator, 'validate'), $args);
-        $this->assertSame($result, $return);
+        $this->assertSame($result, $this->validator->validate(5));
     }
 }

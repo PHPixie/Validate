@@ -38,17 +38,18 @@ class BuilderTest extends \PHPixie\Test\Testcase
      */
     public function testRules()
     {
-        $this->instanceTest('rules');
+        $this->instanceTest('rules', array(
+            'builder' => $this->builder
+        ));
     }
     
     /**
-     * @covers ::result
+     * @covers ::results
      * @covers ::<protected>
      */
-    public function testResult()
+    public function testResults()
     {
-        $result = $this->builder->result();
-        $this->assertInstance($result, '\PHPixie\Validate\Result', array(
+        $this->instanceTest('results', array(
             'builder' => $this->builder
         ));
     }
@@ -60,11 +61,11 @@ class BuilderTest extends \PHPixie\Test\Testcase
     public function testValidator()
     {
         $rule = $this->quickMock('\PHPixie\Validate\Rules\Rule');
-        $result = $this->builder->validator($rule);
+        $validator = $this->builder->validator($rule);
         
-        $this->assertInstance($result, '\PHPixie\Validate\Validator', array(
-            'builder' => $this->builder,
-            'rule'    => $rule,
+        $this->assertInstance($validator, '\PHPixie\Validate\Validator', array(
+            'results' => $this->builder->results(),
+            'rule'    => $rule
         ));
     }
     
