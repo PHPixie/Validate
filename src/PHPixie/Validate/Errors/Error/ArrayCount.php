@@ -8,7 +8,7 @@ class ArrayCount extends \PHPixie\Validate\Errors\Error
     protected $minCount;
     protected $maxCount;
     
-    public function __construct($count, $minCount = null, $maxCount = null)
+    public function __construct($count, $minCount, $maxCount = null)
     {
         if($minCount === null && $maxCount === null) {
             throw new \PHPixie\Validate\Exception("Neither minimum nor maximum count specified.");

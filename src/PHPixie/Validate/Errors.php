@@ -24,18 +24,23 @@ class Errors
         return new Errors\Error\Custom($customType, $stringValue);
     }
     
-    public function arrayCount($count, $minCount = null, $maxCount = null)
-    {
-        return new Errors\Error\ArrayCount($count, $minCount, $maxCount);
-    }
-
     public function arrayType()
     {
         return new Errors\Error\ValueType\ArrayType();
     }
     
+    public function documentType()
+    {
+        return new Errors\Error\ValueType\DocumentType();
+    }
+    
     public function scalarType()
     {
         return new Errors\Error\ValueType\Scalar();
+    }
+    
+    public function arrayCount($count, $minCount, $maxCount = null)
+    {
+        return new Errors\Error\ArrayCount($count, $minCount, $maxCount);
     }
 }

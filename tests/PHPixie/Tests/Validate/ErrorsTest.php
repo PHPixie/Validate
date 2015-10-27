@@ -106,6 +106,18 @@ class ErrorsTest extends \PHPixie\Test\Testcase
             '\PHPixie\Validate\Errors\Error\ValueType\ArrayType'
         );
     }
+    
+    /**
+     * @covers ::documentType
+     * @covers ::<protected>
+     */
+    public function testDocumentType()
+    {
+        $this->assertInstance(
+            $this->errors->documentType(),
+            '\PHPixie\Validate\Errors\Error\ValueType\Document'
+        );
+    }
 
     /**
      * @covers ::scalarType
