@@ -11,16 +11,16 @@ class Validate
         $this->builder = $this->buildBuilder();
     }
     
-    public function valueValidator($callback = null)
+    public function validator($callback = null)
     {
         $rule = $this->rules()->value();
         if($callback !== null) {
             $callback($rule);
         }
-        return $this->validator($rule);
+        return $this->buildValidator($rule);
     }
     
-    public function validator($rule)
+    public function buildValidator($rule)
     {
         return $this->builder->validator($rule);
     }
