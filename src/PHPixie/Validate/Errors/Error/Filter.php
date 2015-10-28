@@ -5,10 +5,12 @@ namespace PHPixie\Validate\Errors\Error;
 class Filter extends \PHPixie\Validate\Errors\Error
 {
     protected $filter;
+    protected $parameters;
     
-    public function __construct($filter)
+    public function __construct($filter, $parameters = array())
     {
-        $this->filter = $filter;
+        $this->filter     = $filter;
+        $this->parameters = $parameters;
     }
     
     public function type()
@@ -21,8 +23,13 @@ class Filter extends \PHPixie\Validate\Errors\Error
         return $this->filter;
     }
     
+    public function parameters()
+    {
+        return $this->parameters;
+    }
+    
     public function asString()
     {
-        return $this->filter;
+        return "Value did not pass filter '{$this->filter}'";
     }
 }

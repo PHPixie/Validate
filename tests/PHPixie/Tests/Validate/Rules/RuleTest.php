@@ -26,7 +26,7 @@ abstract class RuleTest extends \PHPixie\Test\Testcase
     
     protected function getResultMock()
     {
-        return $this->quickMock('\PHPixie\Validate\Results\Result');
+        return $this->abstractMock('\PHPixie\Validate\Results\Result');
     }
     
     protected function getRule()

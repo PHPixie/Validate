@@ -115,7 +115,10 @@ class FilterTest extends \PHPixie\Tests\Validate\Rules\RuleTest
                 $this->method($filter, 'check', $filterValid, array($value), 0);
                 
                 if(!$filterValid) {
-                    $this->method($result, 'addFilterError', null, array($filter), 1);
+                    $this->method($filter, 'name', 'pixie', array(), 1);
+                    $this->method($filter, 'parameters', array(2), array(), 2);
+                    
+                    $this->method($result, 'addFilterError', null, array('pixie', array(2)), 1);
                 }
             }
         }

@@ -62,7 +62,10 @@ class Filter implements \PHPixie\Validate\Rules\Rule
         
         foreach($this->filters as $filter) {
             if(!$filter->check($value)) {
-                $result->addFilterError($filter);
+                $result->addFilterError(
+                    $filter->name(),
+                    $filter->parameters()
+                );
                 break;
             }
         }

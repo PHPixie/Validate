@@ -60,10 +60,10 @@ abstract class Result
         );
     }
     
-    public function addFilterError($filter)
+    public function addFilterError($filter, $arguments = array())
     {
         return $this->addError(
-            $this->errorBuilder->filter($filter)
+            $this->errorBuilder->filter($filter, $arguments)
         );
     }
     
@@ -81,17 +81,10 @@ abstract class Result
         );
     }
     
-    public function addArrayTypeError()
-    {
-        return $this->addError(
-            $this->errorBuilder->arrayType()
-        );
-    }
-    
     public function addDataTypeError()
     {
         return $this->addError(
-            $this->errorBuilder->documentType()
+            $this->errorBuilder->dataType()
         );
     }
     

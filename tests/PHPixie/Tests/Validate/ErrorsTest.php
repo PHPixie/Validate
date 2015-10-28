@@ -32,9 +32,19 @@ class ErrorsTest extends \PHPixie\Test\Testcase
      */
     public function testFilter()
     {
+        $class = '\PHPixie\Validate\Errors\Error\Filter';
+        
+        $parameters = array(5);
+        $error = $this->errors->filter('pixie', $parameters);
+        $this->assertInstance($error, $class, array(
+            'filter'     => 'pixie',
+            'parameters' => $parameters
+        ));
+        
         $error = $this->errors->filter('pixie');
-        $this->assertInstance($error, '\PHPixie\Validate\Errors\Error\Filter', array(
-            'filter' => 'pixie'
+        $this->assertInstance($error, $class, array(
+            'filter'     => 'pixie',
+            'parameters' => array()
         ));
     }
 

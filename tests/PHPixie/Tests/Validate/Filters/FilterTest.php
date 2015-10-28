@@ -4,7 +4,7 @@ namespace PHPixie\Tests\Validate\Filters;
 
 /**
  * @coversDefaultClass \PHPixie\Validate\Filters\Filter
- */ 
+ */
 class FilterTest extends \PHPixie\Test\Testcase
 {
     protected $filters;
@@ -29,6 +29,24 @@ class FilterTest extends \PHPixie\Test\Testcase
     public function testConstruct()
     {
     
+    }
+    
+    /**
+     * @covers ::name
+     * @covers ::<protected>
+     */
+    public function testName()
+    {
+        $this->assertSame($this->name, $this->filter->name());
+    }
+    
+    /**
+     * @covers ::parameters
+     * @covers ::<protected>
+     */
+    public function testParameters()
+    {
+        $this->assertSame($this->parameters, $this->filter->parameters());
     }
     
     /**

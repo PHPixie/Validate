@@ -9,9 +9,9 @@ class Errors
         return new Errors\Error\EmptyValue();
     }
     
-    public function filter($name)
+    public function filter($name, $arguments = array())
     {
-        return new Errors\Error\Filter($name);
+        return new Errors\Error\Filter($name, $arguments);
     }
     
     public function message($message)

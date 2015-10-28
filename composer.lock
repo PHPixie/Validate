@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPixie/Slice.git",
-                "reference": "ab9d4b4eaac1f948ebb93a71849dbfe44cbea1f6"
+                "reference": "09f3ab149f3585b00bcd69ebda6ec6efc67efbb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPixie/Slice/zipball/ab9d4b4eaac1f948ebb93a71849dbfe44cbea1f6",
-                "reference": "ab9d4b4eaac1f948ebb93a71849dbfe44cbea1f6",
+                "url": "https://api.github.com/repos/PHPixie/Slice/zipball/09f3ab149f3585b00bcd69ebda6ec6efc67efbb4",
+                "reference": "09f3ab149f3585b00bcd69ebda6ec6efc67efbb4",
                 "shasum": ""
             },
             "require-dev": {
-                "phpixie/test": "3.*@dev"
+                "phpixie/test": "~3.0"
             },
             "type": "library",
             "extra": {
@@ -53,7 +53,7 @@
                 "data",
                 "parameters"
             ],
-            "time": "2015-04-19 00:49:02"
+            "time": "2015-10-10 23:28:32"
         }
     ],
     "packages-dev": [

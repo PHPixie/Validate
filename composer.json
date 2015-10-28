@@ -1,7 +1,7 @@
 {
     "name": "phpixie/validate",
     "description": "Validation library for PHPixie",
-    "keywords": ["paginate", "pagination", "orm"],
+    "keywords": ["validation", "validate"],
     "homepage": "http://phpixie.com",
     "type": "library",
     "license": "BSD",
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "phpixie/slice": "3.*@dev"
+        
     },
     "require-dev": {
         "phpixie/test": "3.*@dev"

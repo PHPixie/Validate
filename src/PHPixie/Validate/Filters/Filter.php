@@ -20,6 +20,11 @@ class Filter
         return $this->name;
     }
     
+    public function parameters()
+    {
+        return $this->parameters;
+    }
+    
     public function check($value)
     {
         return $this->filters->callFilter(

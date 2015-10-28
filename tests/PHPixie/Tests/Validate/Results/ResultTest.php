@@ -138,19 +138,17 @@ abstract class ResultTest extends \PHPixie\Test\Testcase
      */
     public function testAddErrors()
     {
-        $filter = $this->quickMock('\PHPixie\Validate\Filters\Filter');
-        
         $sets = array(
             array('emptyValue', 'EmptyValue'),
-            array('filter', 'Filter', array($filter)),
+            array('filter', 'Filter', array('email'), array('email', array())),
+            array('filter', 'Filter', array('between', array(3, 4))),
             array('message', 'Message', array('pixie')),
             array('custom', 'Custom', array('pixie', 'trixie')),
             array('custom', 'Custom', array('pixie'), array('pixie', null)),
-            array('arrayType', 'ValueType\ArrayType'),
-            array('documentType', 'ValueType\DocumentType'),
+            array('dataType', 'ValueType\DocumentType'),
             array('scalarType', 'ValueType\ScalarType'),
-            array('arrayCount', 'ArrayCount', array(5, 3, 4)),
-            array('arrayCount', 'ArrayCount', array(5, 3), array(5, 3, null))
+            array('itemCount', 'ArrayCount', array(5, 3, 4)),
+            array('itemCount', 'ArrayCount', array(5, 3), array(5, 3, null))
         );
         
         foreach($sets as $set) {
