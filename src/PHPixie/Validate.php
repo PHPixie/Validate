@@ -11,18 +11,9 @@ class Validate
         $this->builder = $this->buildBuilder();
     }
     
-    public function documentValidator($callback = null)
+    public function valueValidator($callback = null)
     {
-        $rule = $this->rules()->document();
-        if($callback !== null) {
-            $callback($rule);
-        }
-        return $this->validator($rule);
-    }
-    
-    public function arrayValidator($callback = null)
-    {
-        $rule = $this->rules()->arrayOf();
+        $rule = $this->rules()->value();
         if($callback !== null) {
             $callback($rule);
         }

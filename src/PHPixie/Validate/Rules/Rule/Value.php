@@ -74,6 +74,12 @@ class Value implements \PHPixie\Validate\Rules\Rule
         return $rule;
     }
     
+    public function callback($callback)
+    {
+        $rule = $this->ruleBuilder->callback($callback);
+        return $this->addRule($rule);
+    }
+    
     protected function applyFilterParameter($filterRule, $parameter)
     {
         if($parameter === null) {
@@ -103,10 +109,10 @@ class Value implements \PHPixie\Validate\Rules\Rule
     
     public function rules()
     {
-        return $this->rules;    
+        return $this->rules;
     }
     
-    public function validate($value, $result = null)
+    public function validate($value, $result)
     {
         $isEmpty = in_array($value, array(null, ''), true);
         

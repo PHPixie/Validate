@@ -11,6 +11,11 @@ class Rules
         $this->builder = $builder;
     }
     
+    public function callback($callback)
+    {
+        return new Rules\Rule\Callback($callback);
+    }
+    
     public function value()
     {
         return new Rules\Rule\Value($this);

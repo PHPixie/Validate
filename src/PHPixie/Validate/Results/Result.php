@@ -105,7 +105,7 @@ abstract class Result
     public function addInvalidFieldsError($fields)
     {
         return $this->addError(
-            $this->errorBuilder->arrayCount($count, $minCount, $maxCount)
+            $this->errorBuilder->invalidFields($fields)
         );
     }
     

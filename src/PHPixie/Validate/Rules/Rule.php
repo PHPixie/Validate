@@ -4,5 +4,5 @@ namespace PHPixie\Validate\Rules;
 
 interface Rule
 {
-    public function validate($result);
+    public function validate($value, $result);
 }

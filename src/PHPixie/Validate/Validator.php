@@ -21,7 +21,7 @@ class Validator
     public function validate($value)
     {
         $result = $this->results->root($value);
-        $this->rule->validate($result);
+        $this->rule->validate($value, $result);
         return $result;
     }
 }

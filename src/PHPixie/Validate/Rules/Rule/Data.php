@@ -21,10 +21,8 @@ abstract class Data implements \PHPixie\Validate\Rules\Rule
         return $rule;
     }
 
-    public function validate($result)
+    public function validate($value, $result)
     {
-        $value = $result->getValue();
-        
         if(!is_array($value) && !is_object($value)) {
             $result->addDataTypeError();
             return;
