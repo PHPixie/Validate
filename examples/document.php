@@ -33,7 +33,7 @@ $data = array(
 
 // Builder approach
 
-$validator = $validate->valueValidator();
+$validator = $validate->validator();
 $document = $validator->rule()->addDocument();
 
 $document->valueField('name')
@@ -80,11 +80,9 @@ $spellDocument->valueField('type')
     ->addFilter()
         ->alpha();
 
-$validator = $validate->validator($document);
-
 // Or a callback approach
 
-$validator = $validate->valueValidator(function($value) {
+$validator = $validate->validator(function($value) {
     $value->document(function($document) {
         $document
             ->field('name', function($name) {

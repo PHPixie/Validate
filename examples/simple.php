@@ -16,7 +16,7 @@ $data = array(
 
 // The standard approach
 
-$validator = $validate->valueValidator();
+$validator = $validate->validator();
 $document = $validator->rule()->addDocument();
 
 $document->valueField('name')
@@ -72,7 +72,7 @@ $validator->rule()->callback(function($result, $value) {
 
 // The callback approach
 
-$validator = $validate->valueValidator(function($value) {
+$validator = $validate->validator(function($value) {
     $value->document(function($document) {
         $document
             ->allowExtraFields()
