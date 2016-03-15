@@ -2,6 +2,8 @@
 
 namespace PHPixie\Validate\Results;
 
+use PHPixie\Validate\Results\Result\Field;
+
 abstract class Result
 {
     protected $results;
@@ -15,7 +17,11 @@ abstract class Result
         $this->results      = $results;
         $this->errorBuilder = $errorBuilder;
     }
-    
+
+    /**
+     * @param $field
+     * @return Field
+     */
     public function field($field)
     {
         if(!array_key_exists($field, $this->fields)) {

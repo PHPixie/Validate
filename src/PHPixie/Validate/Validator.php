@@ -2,6 +2,9 @@
 
 namespace PHPixie\Validate;
 
+use PHPixie\Validate\Results\Result\Root;
+use PHPixie\Validate\Rules\Rule;
+
 class Validator
 {
     protected $results;
@@ -12,12 +15,19 @@ class Validator
         $this->results = $results;
         $this->rule    = $rule;
     }
-    
+
+    /**
+     * @return Rule
+     */
     public function rule()
     {
         return $this->rule;
     }
-    
+
+    /**
+     * @param $value
+     * @return Root
+     */
     public function validate($value)
     {
         $result = $this->results->root($value);

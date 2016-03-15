@@ -2,6 +2,8 @@
 
 namespace PHPixie\Validate\Rules\Rule\Data;
 
+use PHPixie\Validate\Rules\Rule\Value;
+
 class Document extends \PHPixie\Validate\Rules\Rule\Data
 {
     protected $fieldRules = array();
@@ -24,6 +26,11 @@ class Document extends \PHPixie\Validate\Rules\Rule\Data
         return $this;
     }
 
+    /**
+     * @param $field
+     * @param null $callback
+     * @return Value
+     */
     public function valueField($field, $callback = null)
     {
         $rule = $this->buildValue($callback);

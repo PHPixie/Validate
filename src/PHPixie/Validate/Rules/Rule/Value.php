@@ -64,7 +64,11 @@ class Value implements \PHPixie\Validate\Rules\Rule
         $this->addFilter($parameter);
         return $this;
     }
-    
+
+    /**
+     * @param mixed $parameter
+     * @return Filter
+     */
     public function addFilter($parameter = null)
     {
         $rule = $this->ruleBuilder->filter();
