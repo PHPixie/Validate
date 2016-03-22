@@ -82,7 +82,7 @@ class FiltersTest extends \PHPixie\Test\Testcase
         $classes = array(
             '\PHPixie\Validate\Filters\Registry\Type\Compare',
             '\PHPixie\Validate\Filters\Registry\Type\Pattern',
-            '\PHPixie\Validate\Filters\Registry\Type\String'
+            '\PHPixie\Validate\Filters\Registry\Type\StringRegistry'
         );
         
         foreach($classes as $key => $class) {

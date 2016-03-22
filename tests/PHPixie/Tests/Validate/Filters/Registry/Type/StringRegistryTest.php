@@ -3,9 +3,9 @@
 namespace PHPixie\Tests\Validate\Filters\Registry\Type;
 
 /**
- * @coversDefaultClass \PHPixie\Validate\Filters\Registry\Type\String
+ * @coversDefaultClass \PHPixie\Validate\Filters\Registry\Type\StringRegistry
  */ 
-class StringTest extends \PHPixie\Tests\Validate\Filters\Registry\ImplementationTest
+class StringRegistryTest extends \PHPixie\Tests\Validate\Filters\Registry\ImplementationTest
 {
     protected $sets = array(
         'length' => array(
@@ -32,6 +32,6 @@ class StringTest extends \PHPixie\Tests\Validate\Filters\Registry\Implementation
     
     protected function registry()
     {
-        return new \PHPixie\Validate\Filters\Registry\Type\String();
+        return new \PHPixie\Validate\Filters\Registry\Type\StringRegistry();
     }
 }

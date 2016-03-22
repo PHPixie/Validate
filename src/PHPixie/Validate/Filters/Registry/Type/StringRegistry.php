@@ -2,7 +2,7 @@
 
 namespace PHPixie\Validate\Filters\Registry\Type;
 
-class String extends \PHPixie\Validate\Filters\Registry\Implementation
+class StringRegistry extends \PHPixie\Validate\Filters\Registry\Implementation
 {
     public function filters()
     {

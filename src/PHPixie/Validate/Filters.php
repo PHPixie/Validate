@@ -95,6 +95,6 @@ class Filters
     
     protected function buildStringRegistry()
     {
-        return new Filters\Registry\Type\String();
+        return new Filters\Registry\Type\StringRegistry();
     }
 }
