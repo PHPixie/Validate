@@ -30,7 +30,7 @@ abstract class Value
         $isEmpty = in_array($value, array(null, ''), true);
         
         if($isEmpty) {
-            if(!this->isRequired) {
+            if(!$this->isRequired) {
                 $result->emptyError();
             }
             return;
