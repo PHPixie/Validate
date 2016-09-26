@@ -2,35 +2,70 @@
 
 namespace PHPixie\Validate\Rules\Rule;
 
+use PHPixie\Validate\Results\Result;
+use PHPixie\Validate\Rules;
+
+/**
+ * Class Value
+ * @package PHPixie\Validate\Rules\Rule
+ */
 class Value implements \PHPixie\Validate\Rules\Rule
 {
+    /**
+     * @var Rules
+     */
     protected $ruleBuilder;
-    
+
+    /**
+     * @var bool
+     */
     protected $isRequired = false;
+    /**
+     * @var array
+     */
     protected $rules      = array();
-    
+
+    /**
+     * Value constructor.
+     * @param $ruleBuilder Rules
+     */
     public function __construct($ruleBuilder)
     {
         $this->ruleBuilder = $ruleBuilder;
     }
-    
+
+    /**
+     * @param bool $isRequired
+     * @return $this
+     */
     public function required($isRequired = true)
     {
         $this->isRequired = $isRequired;
         return $this;
     }
-    
+
+    /**
+     * @return bool
+     */
     public function isRequired()
     {
         return $this->isRequired;
     }
-    
+
+    /**
+     * @param null|callable $callback
+     * @return $this
+     */
     public function arrayOf($callback = null)
     {
         $this->addArrayOf($callback);
         return $this;
     }
-    
+
+    /**
+     * @param null|callable $callback
+     * @return Data\ArrayOf
+     */
     public function addArrayOf($callback = null)
     {
         $rule = $this->ruleBuilder->arrayOf();
@@ -41,13 +76,21 @@ class Value implements \PHPixie\Validate\Rules\Rule
         $this->addRule($rule);
         return $rule;
     }
-    
+
+    /**
+     * @param null|callable $callback
+     * @return $this
+     */
     public function document($callback = null)
     {
         $this->addDocument($callback);
         return $this;
     }
-    
+
+    /**
+     * @param null|callable $callback
+     * @return Data\Document
+     */
     public function addDocument($callback = null)
     {
         $rule = $this->ruleBuilder->document();
@@ -58,13 +101,21 @@ class Value implements \PHPixie\Validate\Rules\Rule
         $this->addRule($rule);
         return $rule;
     }
-    
+
+    /**
+     * @param null|mixed $parameter
+     * @return $this
+     */
     public function filter($parameter = null)
     {
         $this->addFilter($parameter);
         return $this;
     }
-    
+
+    /**
+     * @param null|mixed $parameter
+     * @return Filter
+     */
     public function addFilter($parameter = null)
     {
         $rule = $this->ruleBuilder->filter();
@@ -73,13 +124,22 @@ class Value implements \PHPixie\Validate\Rules\Rule
         $this->addRule($rule);
         return $rule;
     }
-    
+
+    /**
+     * @param $callback string
+     * @return Value
+     */
     public function callback($callback)
     {
         $rule = $this->ruleBuilder->callback($callback);
         return $this->addRule($rule);
     }
-    
+
+    /**
+     * @param $filterRule Filter
+     * @param $parameter mixed
+     * @throws \PHPixie\Validate\Exception
+     */
     protected function applyFilterParameter($filterRule, $parameter)
     {
         if($parameter === null) {
@@ -100,18 +160,29 @@ class Value implements \PHPixie\Validate\Rules\Rule
             throw new \PHPixie\Validate\Exception("Invalid filter definition '$type'");
         }
     }
-    
+
+    /**
+     * @param $rule Rules\Rule
+     * @return $this
+     */
     public function addRule($rule)
     {
         $this->rules[] = $rule;
         return $this;
     }
-    
+
+    /**
+     * @return array
+     */
     public function rules()
     {
         return $this->rules;
     }
-    
+
+    /**
+     * @param $value mixed
+     * @param $result Result
+     */
     public function validate($value, $result)
     {
         $isEmpty = in_array($value, array(null, ''), true);

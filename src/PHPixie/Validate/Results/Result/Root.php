@@ -2,22 +2,45 @@
 
 namespace PHPixie\Validate\Results\Result;
 
+use PHPixie\Validate\Errors;
+use PHPixie\Validate\Results;
+
+/**
+ * Class Root
+ * @package PHPixie\Validate\Results\Result
+ */
 class Root extends \PHPixie\Validate\Results\Result
 {
+    /**
+     * @var array|object
+     */
     protected $value;
-    
+
+    /**
+     * Root constructor.
+     * @param $results Results
+     * @param $errorBuilder Errors
+     * @param $value array|object
+     */
     public function __construct($results, $errorBuilder, $value)
     {
         parent::__construct($results, $errorBuilder);
         
         $this->value = $value;
     }
-    
+
+    /**
+     * @return array|object
+     */
     public function getValue()
     {
         return $this->value;
     }
-    
+
+    /**
+     * @param $path string
+     * @return mixed|null
+     */
     public function getPathValue($path)
     {
         $path = explode('.', $path);
@@ -39,7 +62,11 @@ class Root extends \PHPixie\Validate\Results\Result
         
         return $value;
     }
-    
+
+    /**
+     * @param $path string
+     * @return mixed
+     */
     protected function buildFieldResult($path)
     {
         return $this->results->field($this, $path);

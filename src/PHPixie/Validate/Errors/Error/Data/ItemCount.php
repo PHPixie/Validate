@@ -2,12 +2,32 @@
 
 namespace PHPixie\Validate\Errors\Error\Data;
 
+/**
+ * Class ItemCount
+ * @package PHPixie\Validate\Errors\Error\Data
+ */
 class ItemCount extends \PHPixie\Validate\Errors\Error
 {
+    /**
+     * @var integer
+     */
     protected $count;
+    /**
+     * @var integer
+     */
     protected $minCount;
+    /**
+     * @var integer
+     */
     protected $maxCount;
-    
+
+    /**
+     * ItemCount constructor.
+     * @param $count integer
+     * @param $minCount integer
+     * @param null|integer $maxCount
+     * @throws \PHPixie\Validate\Exception
+     */
     public function __construct($count, $minCount, $maxCount = null)
     {
         if($minCount === null && $maxCount === null) {
@@ -18,27 +38,42 @@ class ItemCount extends \PHPixie\Validate\Errors\Error
         $this->minCount   = $minCount;
         $this->maxCount   = $maxCount;
     }
-    
+
+    /**
+     * @return integer
+     */
     public function minCount()
     {
         return $this->minCount;
     }
-    
+
+    /**
+     * @return integer
+     */
     public function maxCount()
     {
         return $this->maxCount;
     }
-    
+
+    /**
+     * @return integer
+     */
     public function count()
     {
         return $this->count;
     }
-    
+
+    /**
+     * @return string
+     */
     public function type()
     {
         return 'itemCount';
     }
-    
+
+    /**
+     * @return string
+     */
     public function asString()
     {
         $prefix = "Item count {$this->count} is not ";
