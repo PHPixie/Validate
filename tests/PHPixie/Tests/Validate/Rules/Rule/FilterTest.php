@@ -103,7 +103,7 @@ class FilterTest extends \PHPixie\Tests\Validate\Rules\RuleTest
         $result = $this->getResultMock();
         if(!$isScalar) {
             $value = array();
-            $this->method($result, 'addScalarTypeError',null, array(), 1);
+            $this->method($result, 'addScalarTypeError',null, array(), 0);
         }else{
             $value = 'trixie';
             foreach($filters as $key => $filter) {
@@ -118,13 +118,12 @@ class FilterTest extends \PHPixie\Tests\Validate\Rules\RuleTest
                     $this->method($filter, 'name', 'pixie', array(), 1);
                     $this->method($filter, 'parameters', array(2), array(), 2);
                     
-                    $this->method($result, 'addFilterError', null, array('pixie', array(2)), 1);
+                    $this->method($result, 'addFilterError', null, array('pixie', array(2)), 0);
                 }
             }
         }
         
-        $this->method($result, 'getValue', $value, array(), 0);
-        $this->rule->validate($result);
+        $this->rule->validate($value, $result);
     }
     
     protected function prepareAddFilter($name, $parameters = array(), $at = 0)

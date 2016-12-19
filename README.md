@@ -39,7 +39,13 @@ $document->valueField('name')
     ->required()
     ->addFilter()
         ->alpha()
-        ->minLength(3);
+        ->minLength(3)
+        
+        // Add custom error message if this set of filters fails
+        ->message('Name is too short')
+        
+        // Or define a custom error type
+        ->customError('name_short', Name is too short');
 
 // You can also add filters as array
 $document->valueField('home')
@@ -66,6 +72,9 @@ $document->valueField('type')
             
             // If is not valid add an error to the result
             $result->addMessageError("Type can be either 'fairy' or 'pixie'");
+            
+            //Or you can just return an error message to be added
+            return "Type can be either 'fairy' or 'pixie'";
         }
     });
 

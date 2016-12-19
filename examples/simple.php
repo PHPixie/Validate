@@ -23,7 +23,8 @@ $document->valueField('name')
     ->required()
     ->addFilter()
         ->alpha()
-        ->minLength(3);
+        ->minLength(3)
+        ->message('Name is too short');
 
 // You can also add filters as array
 $document->valueField('home')
@@ -61,7 +62,9 @@ $document->allowExtraFields();
 // Custom validator function
 $validator->rule()->callback(function($result, $value) {
     if($value['type'] === 'fairy' && $value['home'] !== 'Oak') {
-        $result->addMessageError("Fairies live only inside oaks");
+        
+        //You can just return an error message
+        return "Fairies live only inside oaks";
     }
 });
 
@@ -72,7 +75,7 @@ $validator->rule()->callback(function($result, $value) {
 
 // The callback approach
 
-$validator = $validate->validator(function($value) {
+$validator2 = $validate->validator(function($value) {
     $value->document(function($document) {
         $document
             ->allowExtraFields()

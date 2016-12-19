@@ -22,6 +22,16 @@ class Filter implements \PHPixie\Validate\Rules\Rule
     protected $filters = array();
 
     /**
+     * @var string
+     */
+    protected $customErrorType;
+    
+    /**
+     * @var string
+     */
+    protected $errorMessage;
+
+    /**
      * Filter constructor.
      * @param $filterBuilder
      */
@@ -98,13 +108,50 @@ class Filter implements \PHPixie\Validate\Rules\Rule
         
         foreach($this->filters as $filter) {
             if(!$filter->check($value)) {
-                $result->addFilterError(
-                    $filter->name(),
-                    $filter->parameters()
-                );
+                $this->addError($result, $filter);
                 break;
             }
         }
+    }
+    
+    protected function addError($result, $filter)
+    {
+        if($this->customErrorType !== null) {
+            $result->addCustomError($this->customErrorType, $this->errorMessage);
+            return;
+        }
+        
+        if($this->errorMessage !== null) {
+            $result->addMessageError($this->errorMessage);
+            return;
+        }
+        
+        $result->addFilterError(
+            $filter->name(),
+            $filter->parameters()
+        );
+    }
+
+    /**
+     * @param string $customType
+     * @param string $stringValue
+     * @return $this
+     */
+    public function customError($customType, $stringValue = null)
+    {
+        $this->customErrorType = $customType;
+        $this->errorMessage = $stringValue;
+        return $this;
+    }
+    
+    /**
+     * @param string $message
+     * @return $this
+     */
+    public function message($message)
+    {
+        $this->errorMessage = $message;
+        return $this;
     }
 
     /**

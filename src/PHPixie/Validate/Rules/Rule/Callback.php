@@ -29,6 +29,9 @@ class Callback implements \PHPixie\Validate\Rules\Rule
     public function validate($value, $result)
     {
         $callback = $this->callback;
-        $callback($result, $value);
+        $return = $callback($result, $value);
+        if($return !== null) {
+            $result->addMessageError($return);
+        }
     }
 }

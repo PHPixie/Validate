@@ -102,7 +102,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
         $this->rule = $this->rule();
         $result = $this->getResultMock();
         $values = array();
-        $resultAt = 1;
+        $resultAt = 0;
 
         $this->rule->allowExtraFields($allowExtraFields);
         $extraKeys = array('stella', 'blum');
@@ -135,8 +135,7 @@ class DocumentTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
             $this->method($rule, 'validate', null, array($value, $fieldResult), 0);
         }
         
-        $this->method($result, 'getValue', $values, array(), 0);
-        $this->rule->validate($result);
+        $this->rule->validate($values, $result);
     }
     
     protected function rule()

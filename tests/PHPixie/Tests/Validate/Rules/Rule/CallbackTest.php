@@ -34,9 +34,8 @@ class CallbackTest extends \PHPixie\Tests\Validate\Rules\RuleTest
     public function testValidate()
     {
         $result = $this->getResultMock();
-        $this->method($result, 'getValue', 5, array(), 0);
         
         $this->method($this->callback, '__invoke', null, array($result, 5), 0);
-        $this->rule->validate($result);
+        $this->rule->validate(5, $result);
     }
 }

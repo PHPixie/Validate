@@ -104,7 +104,7 @@ class ArrayOfTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
         $this->rule = $this->rule();
         $result = $this->getResultMock();
         $values = array();
-        $resultAt = 1;
+        $resultAt = 0;
         
         $this->rule->minCount($minCount);
         $this->rule->maxCount($maxCount);
@@ -145,8 +145,7 @@ class ArrayOfTest extends \PHPixie\Tests\Validate\Rules\Rule\DataTest
             }
         }
         
-        $this->method($result, 'getValue', $values, array(), 0);
-        $this->rule->validate($result);
+        $this->rule->validate($values, $result);
     }
 
     protected function rule()

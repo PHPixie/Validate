@@ -103,12 +103,15 @@ class Value implements \PHPixie\Validate\Rules\Rule
     }
 
     /**
-     * @param null|mixed $parameter
+     * @param null|mixed  $parameter
+     * @param null|string $message
+     * @param null|string $customErrorType
      * @return $this
      */
-    public function filter($parameter = null)
+    public function filter($parameter = null, $message = null, $customErrorType = null)
     {
-        $this->addFilter($parameter);
+        $rule = $this->addFilter($parameter);
+        $rule->customError($customErrorType, $message);
         return $this;
     }
 

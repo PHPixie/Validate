@@ -48,7 +48,7 @@ class ValidatorTest extends \PHPixie\Test\Testcase
         $result = $this->quickMock('\PHPixie\Validate\Results\Result\Root');
         $this->method($this->results, 'root', $result, array(5), 0);
         
-        $this->method($this->rule, 'validate', null, array($result), 0);
+        $this->method($this->rule, 'validate', null, array(5, $result), 0);
         
         $this->assertSame($result, $this->validator->validate(5));
     }

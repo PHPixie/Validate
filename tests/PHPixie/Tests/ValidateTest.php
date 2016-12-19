@@ -70,77 +70,11 @@ class ValidateTest extends \PHPixie\Test\Testcase
         $rules = $this->prepareRules();
         $this->assertSame($rules, $this->validate->rules());
     }
-    
-    /**
-     * @covers ::validator
-     * @covers ::<protected>
-     */
-    public function testValidator()
-    {
-        $rule = $this->quickMock('\PHPixie\Validate\Rules\Rule');
-        $validator = $this->prepareValidator($rule);
-        
-        $this->assertSame($validator, $this->validate->validator($rule));
-    }
-    
-    /**
-     * @covers ::documentValidator
-     * @covers ::<protected>
-     */
-    public function testDocumentValidator()
-    {
-        $this->validatorTest('document', false);
-        $this->validatorTest('document', true);
-    }
-    
-    /**
-     * @covers ::arrayValidator
-     * @covers ::<protected>
-     */
-    public function testArrayValidator()
-    {
-        $this->validatorTest('array', false);
-        $this->validatorTest('array', true);
-    }
-    
-    protected function validatorTest($type, $withCallback)
-    {
-        $rules = $this->prepareRules();
-        
-        $ruleType = $type == 'document' ? 'document' : 'arrayOf';
-        
-        $class = '\PHPixie\Validate\Rules\Rule\Data\\'.ucfirst($ruleType);
-        $rule = $this->quickMock($class);
-        
-        $this->method($rules, $ruleType, $rule, array(), 0);
-        
-        $validator = $this->prepareValidator($rule, 1);
-        
-        $args = array();
-        if($withCallback) {
-            $callback = $this->quickMock('\PHPixie\Tests\ValidateCallback');
-            $this->method($callback, '__invoke', null, array($rule), 0);
-            $args[]= $callback;
-        }
-        
-        $method = $type == 'document' ? 'document' : 'array';
-        $method.= 'Validator';
-        
-        $result = call_user_func_array(array($this->validate, $method), $args);
-        $this->assertSame($validator, $result);
-    }
-    
+
     protected function prepareRules($at = 0)
     {
         $rules = $this->quickMock('\PHPixie\Validate\Rules');
         $this->method($this->builder, 'rules', $rules, array(), $at);
         return $rules;
-    }
-    
-    protected function prepareValidator($rule, $at = 0)
-    {
-        $validator = $this->quickMock('\PHPixie\Validate\Validator');
-        $this->method($this->builder, 'validator', $validator, array($rule), $at);
-        return $validator;
     }
 }
