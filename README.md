@@ -45,7 +45,7 @@ $document->valueField('name')
         ->message('Name is too short')
         
         // Or define a custom error type
-        ->customError('name_short', Name is too short');
+        ->customError('name_short', 'Name is too short');
 
 // You can also add filters as array
 $document->valueField('home')
