@@ -59,7 +59,9 @@ $document->valueField('home')
 // A shorthand approach
 $document->valueField('age')
     ->required()
-    ->filter('numeric');
+    
+    // Define filter and message
+    ->filter('numeric', 'Age must be a number');
     
 // Pass your own callback
 $document->valueField('type')
