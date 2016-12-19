@@ -55,6 +55,15 @@ $document->valueField('home')
             'alpha',
             'minLength' => array(3)
         ));
+        
+// Or a shorthand
+
+$document->valueField('home')
+    ->required()
+    ->filter(array(
+        'alpha',
+        'minLength' => array(3)
+    ), "Home must consist of letters and be longer than 3 characters");
 
 // A shorthand approach
 $document->valueField('age')
