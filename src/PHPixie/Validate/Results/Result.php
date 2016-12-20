@@ -196,6 +196,15 @@ abstract class Result
     {
         return $this->errors;
     }
+    
+    public function firstError()
+    {
+        if(!isset($this->errors[0])) {
+            return null;
+        }
+        
+        return $this->errors[0];
+    }
 
     /**
      * @return mixed
