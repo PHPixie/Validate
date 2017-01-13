@@ -9,11 +9,12 @@ namespace PHPixie\Validate;
 class Errors
 {
     /**
+     * @param string $message
      * @return Errors\Error\EmptyValue
      */
-    public function emptyValue()
+    public function emptyValue($message = null)
     {
-        return new Errors\Error\EmptyValue();
+        return new Errors\Error\EmptyValue($message);
     }
 
     /**

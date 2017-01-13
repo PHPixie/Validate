@@ -44,6 +44,15 @@ class Validate
     }
 
     /**
+     * @param Validate\Validator $validator
+     * @return Validate\Form
+     */
+    public function form($validator)
+    {
+        return $this->builder->form($validator);
+    }
+
+    /**
      * @return mixed
      */
     public function rules()

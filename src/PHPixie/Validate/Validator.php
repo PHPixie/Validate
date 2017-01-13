@@ -15,14 +15,14 @@ class Validator
      */
     protected $results;
     /**
-     * @var Rule
+     * @var Rule\Value
      */
     protected $rule;
 
     /**
      * Validator constructor.
      * @param $results Results
-     * @param $rule Rule
+     * @param $rule Rule\Value
      */
     public function __construct($results, $rule)
     {
@@ -31,7 +31,7 @@ class Validator
     }
 
     /**
-     * @return Rule
+     * @return Rule\Value
      */
     public function rule()
     {

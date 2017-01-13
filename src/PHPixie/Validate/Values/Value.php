@@ -12,14 +12,21 @@ abstract class Value
      * @var bool
      */
     protected $isRequired = false;
+
+    /**
+     * @var string
+     */
+    protected $requiredErrorMessage = null;
+
     /**
      * @var array
      */
     protected $rules = array();
 
-    public function required()
+    public function required($errorMessage = null)
     {
         $this->isRequired = true;
+        $this->requiredErrorMessage = $errorMessage;
     }
 
     /**
@@ -32,9 +39,9 @@ abstract class Value
     }
 
     /**
-     * @param $conditionCallback
+     * @param $callback
      */
-    public function conditional($conditionCallback)
+    public function conditional($callback)
     {
         $rule = $this->getConditionalRule();
         $rule = $this->ruleBuilder->callback($callback);
@@ -51,7 +58,7 @@ abstract class Value
         
         if($isEmpty) {
             if(!$this->isRequired) {
-                $result->emptyError();
+                $result->emptyError($this->requiredErrorMessage);
             }
             return;
         }
@@ -59,5 +66,5 @@ abstract class Value
         $this->validateValue($value, $result);
     }
     
-    protected function validateValue($value, $result);
+    abstract protected function validateValue($value, $result);
 }

@@ -20,6 +20,12 @@ class Value implements \PHPixie\Validate\Rules\Rule
      * @var bool
      */
     protected $isRequired = false;
+
+    /**
+     * @var string
+     */
+    protected $requiredErrorMessage = null;
+
     /**
      * @var array
      */
@@ -35,12 +41,13 @@ class Value implements \PHPixie\Validate\Rules\Rule
     }
 
     /**
-     * @param bool $isRequired
+     * @param string $errorMessage
      * @return $this
      */
-    public function required($isRequired = true)
+    public function required($errorMessage = null)
     {
-        $this->isRequired = $isRequired;
+        $this->isRequired = true;
+        $this->requiredErrorMessage = $errorMessage;
         return $this;
     }
 
@@ -192,7 +199,7 @@ class Value implements \PHPixie\Validate\Rules\Rule
         
         if($isEmpty) {
             if($this->isRequired) {
-                $result->addEmptyValueError();
+                $result->addEmptyValueError($this->requiredErrorMessage);
             }
             return;
         }

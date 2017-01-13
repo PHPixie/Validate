@@ -65,6 +65,35 @@ class Root extends \PHPixie\Validate\Results\Result
 
     /**
      * @param $path string
+     * @return Errors\Error|null
+     */
+    public function getPathError($path)
+    {
+        $path = explode('.', $path);
+        $result = $this;
+        foreach ($path as $step) {
+            if(!isset($result->fields[$step])) {
+                return null;
+            }
+
+            $result = $result->fields[$step];
+        }
+
+        return $result->firstError();
+    }
+
+    /**
+     * @param $path string
+     * @return bool
+     */
+    public function isPathValid($path)
+    {
+        return $this->getPathError($path) === null;
+    }
+
+
+    /**
+     * @param $path string
      * @return mixed
      */
     protected function buildFieldResult($path)

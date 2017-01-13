@@ -58,6 +58,15 @@ class Builder
     }
 
     /**
+     * @param Validator $validator
+     * @return Form
+     */
+    public function form($validator)
+    {
+        return new Form($validator);
+    }
+
+    /**
      * @param string $name
      * @return mixed
      */

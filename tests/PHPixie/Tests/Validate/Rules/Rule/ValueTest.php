@@ -36,9 +36,6 @@ class ValueTest extends \PHPixie\Tests\Validate\Rules\RuleTest
         
         $this->assertSame($this->rule, $this->rule->required());
         $this->assertSame(true, $this->rule->isRequired());
-        
-        $this->assertSame($this->rule, $this->rule->required(false));
-        $this->assertSame(false, $this->rule->isRequired());
     }
     
     /**

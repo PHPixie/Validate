@@ -93,10 +93,10 @@ abstract class Result
     /**
      * @return Result
      */
-    public function addEmptyValueError()
+    public function addEmptyValueError($message = null)
     {
         return $this->addError(
-            $this->errorBuilder->emptyValue()
+            $this->errorBuilder->emptyValue($message)
         );
     }
 
